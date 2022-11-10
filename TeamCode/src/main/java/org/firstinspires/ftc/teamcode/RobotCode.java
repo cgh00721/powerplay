@@ -53,24 +53,24 @@ public class RobotCode extends LinearOpMode {
             telemetry.addData("Working", "Working");
             telemetry.update();
 //***************************************************************************
-            if(gamepad1.left_trigger>0) {
-                LeftFrontDrive.setPower(1/2);
-                LeftBackDrive.setPower(1/2);
-                RightFrontDrive.setPower(-1/2);
-                RightBackDrive.setPower(-1/2);
+            if(gamepad1.left_bumper) {
+                LeftFrontDrive.setPower(0.5);
+                LeftBackDrive.setPower(0.5);
+                RightFrontDrive.setPower(-0.5);
+                RightBackDrive.setPower(-0.5);
             }
-            else if(gamepad1.right_trigger>0) {
-                LeftFrontDrive.setPower(-1/2);
-                LeftBackDrive.setPower(-1/2);
-                RightFrontDrive.setPower(1/2);
-                RightBackDrive.setPower(1/2);
+            else if(gamepad1.right_bumper) {
+                LeftFrontDrive.setPower(-0.5);
+                LeftBackDrive.setPower(-0.5);
+                RightFrontDrive.setPower(0.5);
+                RightBackDrive.setPower(0.5);
             }
             else {
                 //Set Power using cubic control
-                LeftFrontDrive.setPower((Math.pow(gamepad1.left_stick_y,5) - Math.pow(gamepad1.left_stick_x,5))*0.75);
-                LeftBackDrive.setPower((Math.pow(gamepad1.left_stick_y,5) + Math.pow(gamepad1.left_stick_x,5))*0.75);
-                RightFrontDrive.setPower((Math.pow(gamepad1.left_stick_y,5) + Math.pow(gamepad1.left_stick_x,5))*0.75);
-                RightBackDrive.setPower((Math.pow(gamepad1.left_stick_y,5) - Math.pow(gamepad1.left_stick_x,5))*0.75);
+                LeftFrontDrive.setPower((Math.pow(gamepad1.left_stick_y,5) + Math.pow(gamepad1.left_stick_x,5))*0.75);
+                LeftBackDrive.setPower((Math.pow(gamepad1.left_stick_y,5) - Math.pow(gamepad1.left_stick_x,5))*0.75);
+                RightFrontDrive.setPower((Math.pow(gamepad1.left_stick_y,5) - Math.pow(gamepad1.left_stick_x,5))*0.75);
+                RightBackDrive.setPower((Math.pow(gamepad1.left_stick_y,5) + Math.pow(gamepad1.left_stick_x,5))*0.75);
             }
 //***************************************************************************
 
