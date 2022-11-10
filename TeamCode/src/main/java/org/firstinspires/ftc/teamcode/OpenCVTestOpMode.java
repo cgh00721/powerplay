@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvInternalCamera;
@@ -20,8 +21,10 @@ public class OpenCVTestOpMode extends LinearOpMode {
         detectionPipeline = new ConeDetectionPipeline();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        WebcamName webcamName = hardwareMap.get(WebcamName.class,"NAME_OF_CAMERA_IN_CONFIG_FILE");
 
+        //OpenCvCamera camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName,cameraMonitorViewId);
         camera.openCameraDevice();
         camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
 
