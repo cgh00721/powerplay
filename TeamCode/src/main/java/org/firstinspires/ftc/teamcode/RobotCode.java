@@ -66,48 +66,26 @@ public class RobotCode extends LinearOpMode {
             telemetry.addData("Working", "Working");
             telemetry.update();
 //***************************************************************************
-            if(gamepad1.left_bumper) {
-                LeftFrontDrive.setPower(1/1.75);
-                LeftBackDrive.setPower(1/1.75);
-                RightFrontDrive.setPower(-1/1.75);
-                RightBackDrive.setPower(-1/1.75);
+            if(gamepad1.left_trigger>0) {
+                LeftFrontDrive.setPower(1/2);
+                LeftBackDrive.setPower(1/2);
+                RightFrontDrive.setPower(-1/2);
+                RightBackDrive.setPower(-1/2);
             }
-            else if(gamepad1.right_bumper) {
-                LeftFrontDrive.setPower(-1/1.75);
-                LeftBackDrive.setPower(-1/1.75);
-                RightFrontDrive.setPower(1/1.75);
-                RightBackDrive.setPower(1/1.75);
+            else if(gamepad1.right_trigger>0) {
+                LeftFrontDrive.setPower(-1/2);
+                LeftBackDrive.setPower(-1/2);
+                RightFrontDrive.setPower(1/2);
+                RightBackDrive.setPower(1/2);
             }
             else {
                 //Set Power using cubic control
-                LeftFrontDrive.setPower((Math.pow(gamepad1.left_stick_y,3) - Math.pow(gamepad1.left_stick_x,3))/2);
-                LeftBackDrive.setPower((Math.pow(gamepad1.left_stick_y,3) + Math.pow(gamepad1.left_stick_x,3))/2);
-                RightFrontDrive.setPower((Math.pow(gamepad1.left_stick_y,3) + Math.pow(gamepad1.left_stick_x,3))/2);
-                RightBackDrive.setPower((Math.pow(gamepad1.left_stick_y,3) - Math.pow(gamepad1.left_stick_x,3))/2);
+                LeftFrontDrive.setPower((Math.pow(gamepad1.left_stick_y,5) - Math.pow(gamepad1.left_stick_x,5))*0.75);
+                LeftBackDrive.setPower((Math.pow(gamepad1.left_stick_y,5) + Math.pow(gamepad1.left_stick_x,5))*0.75);
+                RightFrontDrive.setPower((Math.pow(gamepad1.left_stick_y,5) + Math.pow(gamepad1.left_stick_x,5))*0.75);
+                RightBackDrive.setPower((Math.pow(gamepad1.left_stick_y,5) - Math.pow(gamepad1.left_stick_x,5))*0.75);
             }
 //***************************************************************************
-            /**
-             * Old Logarithmic control scheme for robot
-             * else if(gamepad1.left_stick_y <=-0.1 || gamepad1.left_stick_x !=0) {
-             LeftFrontDrive.setPower(Math.log((gamepad1.left_stick_y*gamepad1.left_stick_y)-0.01) - (Math.log(((gamepad1.left_stick_x)*(gamepad1.left_stick_x))-0.01)));
-             LeftBackDrive.setPower(Math.log((gamepad1.left_stick_y*gamepad1.left_stick_y)-0.01) + (Math.log(((gamepad1.left_stick_x)*(gamepad1.left_stick_x))-0.01)));
-             RightFrontDrive.setPower(Math.log((gamepad1.left_stick_y*gamepad1.left_stick_y)-0.01) +(Math.log(((gamepad1.left_stick_x)*(gamepad1.left_stick_x))-0.01)));
-             RightBackDrive.setPower(Math.log((gamepad1.left_stick_y*gamepad1.left_stick_y)-0.01) - (Math.log((gamepad1.left_stick_x*gamepad1.left_stick_x)-0.01)));
-             }
-             else if(gamepad1.left_stick_y >=0.1 || gamepad1.left_stick_x !=0){
-             LeftFrontDrive.setPower(Math.log(gamepad1.left_stick_y+1.1)- Math.log(gamepad1.left_stick_x+1.1));
-             LeftBackDrive.setPower(Math.log(gamepad1.left_stick_y+1.1) + Math.log(gamepad1.left_stick_x+1.1));
-             RightFrontDrive.setPower(Math.log(gamepad1.left_stick_y+1.1) + Math.log(gamepad1.left_stick_x+1.1));
-             RightBackDrive.setPower(Math.log(gamepad1.left_stick_y+1.1)- Math.log(gamepad1.left_stick_x+1.1));
-             }
-             else{
-             LeftFrontDrive.setPower(0 - 0);
-             LeftBackDrive.setPower(0 + 0);
-             RightFrontDrive.setPower(0 + 0);
-             RightBackDrive.setPower(0 - 0);
-             }
-
-             * */
 
         }
     }
