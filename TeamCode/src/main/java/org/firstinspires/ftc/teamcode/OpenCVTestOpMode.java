@@ -38,6 +38,7 @@ public class OpenCVTestOpMode extends LinearOpMode {
 
         while (opModeIsActive()) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
+            telemetry.update();
             sleep(500);
         }
     }

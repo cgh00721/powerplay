@@ -32,11 +32,11 @@ public class ConeDetectionPipeline extends OpenCvPipeline {
         double magenta_dist = euclidianDistance(rgba, MAGENTA);
         double yellow_dist = euclidianDistance(rgba, YELLOW);
 
-        if ((cyan_dist > magenta_dist) && (cyan_dist > yellow_dist)) {
+        if ((cyan_dist < magenta_dist) && (cyan_dist < yellow_dist)) {
             latestResult = 1;
-        } else if ((magenta_dist > cyan_dist) && (magenta_dist > yellow_dist)) {
+        } else if ((magenta_dist < cyan_dist) && (magenta_dist < yellow_dist)) {
             latestResult = 2;
-        } else if ((yellow_dist > cyan_dist) && (yellow_dist > magenta_dist)) {
+        } else if ((yellow_dist < cyan_dist) && (yellow_dist < magenta_dist)) {
             latestResult = 3;
         }
         
