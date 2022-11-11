@@ -25,10 +25,15 @@ public class ColorDetectionAutonomous extends LinearOpMode {
         LeftBackDrive = hardwareMap.dcMotor.get("LBD");
         RightBackDrive = hardwareMap.dcMotor.get("RBD");
 
-        RightBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        LeftFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        LeftBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        RightFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LeftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LeftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        RightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry.update();
         //Set wheel diection
