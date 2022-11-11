@@ -71,19 +71,17 @@ public class ColorDetectionAutonomous extends LinearOpMode {
 
         telemetry.addData("Status", "Running");
         telemetry.update();
-            telemetry.addData("Result", detectionPipeline.getLatestResult());
-            telemetry.update();
-            sleep(500);
-            if(detectionPipeline.getLatestResult() == 1){
-                robot.Forward(0.1,70);
-                sleep(500);
-            }
-            else if(detectionPipeline.getLatestResult() == 2){
-                robot.Reverse(0.1,70);
-                sleep(500);
-            }
-            else if(detectionPipeline.getLatestResult() == 3) {
-                sleep(500);
-            }
-    }
+        telemetry.addData("Result", detectionPipeline.getLatestResult());
+        telemetry.update();
+        sleep(500);
+        if (detectionPipeline.getLatestResult() == 1) {
+            robot.Forward(0.5, 1000);
+            sleep(5000);
+        } else if (detectionPipeline.getLatestResult() == 2) {
+            robot.Reverse(0.5, 1000);
+            sleep(5000);
+        } else if (detectionPipeline.getLatestResult() == 3) {
+            sleep(5000);
+        }
+        }
 }

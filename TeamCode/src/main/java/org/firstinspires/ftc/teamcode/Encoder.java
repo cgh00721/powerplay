@@ -38,6 +38,10 @@ public class Encoder extends AutonomousTest{
         LeftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LeftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        RightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         RightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         RightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         LeftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -61,6 +65,11 @@ public class Encoder extends AutonomousTest{
         RightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LeftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LeftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        RightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         RightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         RightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         LeftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
