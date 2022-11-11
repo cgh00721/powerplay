@@ -13,6 +13,7 @@ public class RobotCode extends LinearOpMode {
     private DcMotor LeftFrontDrive = null;
     private DcMotor LeftBackDrive = null;
     private DcMotor RightBackDrive = null;
+    private DcMotor Lift = null;
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -24,12 +25,13 @@ public class RobotCode extends LinearOpMode {
         LeftFrontDrive = hardwareMap.dcMotor.get("LFD");
         LeftBackDrive = hardwareMap.dcMotor.get("LBD");
         RightBackDrive = hardwareMap.dcMotor.get("RBD");
-
+        Lift = hardwareMap.dcMotor.get("Lift");
         RightBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LeftFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LeftBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         RightFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+        Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.update();
         //Set wheel diection
         RightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -42,7 +44,7 @@ public class RobotCode extends LinearOpMode {
         RightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LeftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LeftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 
 
@@ -67,11 +69,16 @@ public class RobotCode extends LinearOpMode {
             }
             else {
                 //Set Power using cubic control
-                LeftFrontDrive.setPower((Math.pow(gamepad1.left_stick_y,5) + Math.pow(gamepad1.left_stick_x,5))*0.75);
-                LeftBackDrive.setPower((Math.pow(gamepad1.left_stick_y,5) - Math.pow(gamepad1.left_stick_x,5))*0.75);
-                RightFrontDrive.setPower((Math.pow(gamepad1.left_stick_y,5) - Math.pow(gamepad1.left_stick_x,5))*0.75);
-                RightBackDrive.setPower((Math.pow(gamepad1.left_stick_y,5) + Math.pow(gamepad1.left_stick_x,5))*0.75);
+                LeftFrontDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) + Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
+                LeftBackDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) - Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
+                RightFrontDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) - Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
+                RightBackDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) + Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
             }
+                if (Lift.getCurrentPosition() <= 2100 && Lift.getCurrentPosition() >= -100) {
+                    Lift.setPower(-gamepad1.right_stick_y / 3);
+                }
+
+
 //***************************************************************************
 
         }
