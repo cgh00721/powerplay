@@ -1,18 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+        import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+        import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvInternalCamera;
-import org.openftc.easyopencv.OpenCvCameraRotation;
+        import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+        import org.openftc.easyopencv.OpenCvCamera;
+        import org.openftc.easyopencv.OpenCvCameraFactory;
+        import org.openftc.easyopencv.OpenCvInternalCamera;
+        import org.openftc.easyopencv.OpenCvCameraRotation;
 
 
 @TeleOp()
-public class OpenCVTestOpMode extends LinearOpMode {
+public class ColorDetectionAutonomous extends LinearOpMode {
     ConeDetectionPipeline detectionPipeline;
     private DcMotor RightFrontDrive = null;
     private DcMotor LeftFrontDrive = null;
@@ -65,8 +65,6 @@ public class OpenCVTestOpMode extends LinearOpMode {
 
         telemetry.addData("Status", "Running");
         telemetry.update();
-
-        while (opModeIsActive()) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
             sleep(500);
@@ -78,9 +76,8 @@ public class OpenCVTestOpMode extends LinearOpMode {
                 robot.Reverse(0.1,70);
                 sleep(500);
             }
-            else if(detectionPipeline.getLatestResult() == 3){
+            else if(detectionPipeline.getLatestResult() == 3) {
                 sleep(500);
             }
-        }
     }
 }
