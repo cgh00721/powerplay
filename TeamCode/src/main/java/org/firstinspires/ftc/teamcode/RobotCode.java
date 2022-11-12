@@ -74,14 +74,11 @@ public class RobotCode extends LinearOpMode {
                 RightFrontDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) + Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
                 RightBackDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) - Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
             }
-
             if(gamepad1.dpad_up && Lift.getCurrentPosition() <= 2000){
-                Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                Lift.setPower(0.2);
+                Lift.setPower(0.5);
             }
             else if(gamepad1.dpad_down && Lift.getCurrentPosition() >= 0) {
-                Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                Lift.setPower(-0.2);
+                Lift.setPower(-0.5);
             }
             else {
                 Lift.setPower(0);
