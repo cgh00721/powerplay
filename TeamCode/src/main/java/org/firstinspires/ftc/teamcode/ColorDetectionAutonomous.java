@@ -59,7 +59,7 @@ public class ColorDetectionAutonomous extends LinearOpMode {
         OpenCvCamera camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         //OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName,cameraMonitorViewId);
         camera.openCameraDevice();
-        camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+        camera.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
 
         camera.setPipeline(detectionPipeline);
 
@@ -71,16 +71,26 @@ public class ColorDetectionAutonomous extends LinearOpMode {
 
         telemetry.addData("Status", "Running");
         telemetry.update();
-        telemetry.addData("Result", detectionPipeline.getLatestResult());
-        telemetry.update();
+        sleep(500);
+        robot.StrafeRight(0.5,800);
+        robot.Reverse(0.5,300);
         sleep(500);
         if (detectionPipeline.getLatestResult() == 1) {
-            robot.Forward(0.5, 1000);
+            telemetry.addData("Result", detectionPipeline.getLatestResult());
+            telemetry.update();
+            robot.StrafeRight(0.5, 1100);
+            robot.Forward(0.5,1100);
             sleep(5000);
         } else if (detectionPipeline.getLatestResult() == 2) {
-            robot.Reverse(0.5, 1000);
+            telemetry.addData("Result", detectionPipeline.getLatestResult());
+            telemetry.update();
+            robot.StrafeRight(0.5, 1000);
             sleep(5000);
         } else if (detectionPipeline.getLatestResult() == 3) {
+            telemetry.addData("Result", detectionPipeline.getLatestResult());
+            telemetry.update();
+            robot.StrafeRight(0.5,1000);
+            robot.Reverse(0.5,1000);
             sleep(5000);
         }
         }

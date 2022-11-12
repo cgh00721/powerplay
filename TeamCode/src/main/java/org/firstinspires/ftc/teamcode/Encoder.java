@@ -32,6 +32,7 @@ public class Encoder extends AutonomousTest{
         this.LeftBackDrive = LBD;
 
     }
+
     public void Forward(double power, int clicks){
         RightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
