@@ -1,19 +1,19 @@
 package org.firstinspires.ftc.teamcode;
 
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-        import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-        import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
-        import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-        import org.openftc.easyopencv.OpenCvCamera;
-        import org.openftc.easyopencv.OpenCvCameraFactory;
-        import org.openftc.easyopencv.OpenCvInternalCamera;
-        import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvInternalCamera;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 
-@Autonomous(name="ColorDetectionAutonomous", group="Pushbot")
-public class ColorDetectionAutonomous extends LinearOpMode {
+@Autonomous(name="RedSide", group="Pushbot")
+public class RedSide extends LinearOpMode {
     ConeDetectionPipeline detectionPipeline;
     private DcMotor RightFrontDrive = null;
     private DcMotor LeftFrontDrive = null;
@@ -72,9 +72,9 @@ public class ColorDetectionAutonomous extends LinearOpMode {
         telemetry.addData("Status", "Running");
         telemetry.update();
         sleep(500);
-        robot.Reverse(0.5,1000);
-        sleep(100);
         robot.Forward(0.5,1000);
+        sleep(100);
+        robot.Reverse(0.5,1000);
         robot.StrafeRight(0.5,800);
         robot.Reverse(0.5,300);
         sleep(500);
@@ -96,5 +96,5 @@ public class ColorDetectionAutonomous extends LinearOpMode {
             robot.Reverse(0.5,1200);
             sleep(5000);
         }
-        }
+    }
 }

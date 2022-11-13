@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 @TeleOp(name="RobotCode")
@@ -14,6 +16,7 @@ public class RobotCode extends LinearOpMode {
     private DcMotor LeftBackDrive = null;
     private DcMotor RightBackDrive = null;
     private DcMotor Lift = null;
+    private CRServo claw = null;
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -26,6 +29,7 @@ public class RobotCode extends LinearOpMode {
         LeftBackDrive = hardwareMap.dcMotor.get("LBD");
         RightBackDrive = hardwareMap.dcMotor.get("RBD");
         Lift = hardwareMap.dcMotor.get("Lift");
+        //claw = hardwareMap.crservo.get("claw");
         RightBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LeftFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LeftBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -83,7 +87,14 @@ public class RobotCode extends LinearOpMode {
             else {
                 Lift.setPower(0);
             }
-
+            /**
+            if(gamepad1.a){
+                claw.setPosition(0);
+            }
+            if(gamepad1.b){
+                claw.setPosition(1);
+            }
+            **/
 //***************************************************************************
 
         }

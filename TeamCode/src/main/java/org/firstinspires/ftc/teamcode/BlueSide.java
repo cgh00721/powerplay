@@ -1,19 +1,19 @@
 package org.firstinspires.ftc.teamcode;
 
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-        import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-        import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
-        import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-        import org.openftc.easyopencv.OpenCvCamera;
-        import org.openftc.easyopencv.OpenCvCameraFactory;
-        import org.openftc.easyopencv.OpenCvInternalCamera;
-        import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvInternalCamera;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 
-@Autonomous(name="ColorDetectionAutonomous", group="Pushbot")
-public class ColorDetectionAutonomous extends LinearOpMode {
+@Autonomous(name="BlueSide", group="Pushbot")
+public class BlueSide extends LinearOpMode {
     ConeDetectionPipeline detectionPipeline;
     private DcMotor RightFrontDrive = null;
     private DcMotor LeftFrontDrive = null;
@@ -88,6 +88,7 @@ public class ColorDetectionAutonomous extends LinearOpMode {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
             robot.StrafeRight(0.5, 1000);
+            robot.Forward(0.1,150);
             sleep(5000);
         } else if (detectionPipeline.getLatestResult() == 3) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
@@ -96,5 +97,5 @@ public class ColorDetectionAutonomous extends LinearOpMode {
             robot.Reverse(0.5,1200);
             sleep(5000);
         }
-        }
+    }
 }
