@@ -18,7 +18,10 @@ import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 
-
+/**Encoder Ratio:
+Aprox 0.3mm per pulse -- exact calculation: (37.5pi)/((((1+(46/17))) * (1+(46/17))) * 28)
+scales to 1016 pulse per foot
+**/
 public class Encoder extends AutonomousTest{
     private DcMotor LeftFrontDrive;
     private DcMotor LeftBackDrive;
