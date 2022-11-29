@@ -19,6 +19,7 @@ public class BlueSide extends LinearOpMode {
     private DcMotor LeftFrontDrive = null;
     private DcMotor LeftBackDrive = null;
     private DcMotor RightBackDrive = null;
+    int inch = 1016/12;
     public void runOpMode() {
         RightFrontDrive = hardwareMap.dcMotor.get("RFD");
         LeftFrontDrive = hardwareMap.dcMotor.get("LFD");
@@ -71,8 +72,26 @@ public class BlueSide extends LinearOpMode {
 
         telemetry.addData("Status", "Running");
         telemetry.update();
+        
+        robot.Forward(0.5 ,16.25 * inch);
         sleep(500);
-        robot.Reverse(0.5,1000);
+        if (detectionPipeline.getLatestResult() == 1) {
+            telemetry.addData("Result", detectionPipeline.getLatestResult());
+            telemetry.update();
+            robot.StrafeLeft(0.5, 23.5 * inch);
+            sleep(5000);
+        } else if (detectionPipeline.getLatestResult() == 2) {
+            telemetry.addData("Result", detectionPipeline.getLatestResult());
+            telemetry.update();
+            robot.Forward(0.1,150);
+            sleep(5000);
+        } else if (detectionPipeline.getLatestResult() == 3) {
+            telemetry.addData("Result", detectionPipeline.getLatestResult());
+            telemetry.update();
+            robot.StrafeRight(0.5, 23.5 * inch);
+            sleep(5000);
+        }
+        /**robot.Reverse(0.5,1000);
         sleep(100);
         robot.Forward(0.5,1000);
         robot.StrafeRight(0.5,800);
@@ -97,5 +116,6 @@ public class BlueSide extends LinearOpMode {
             robot.Reverse(0.5,1050);
             sleep(5000);
         }
+        **/
     }
 }
