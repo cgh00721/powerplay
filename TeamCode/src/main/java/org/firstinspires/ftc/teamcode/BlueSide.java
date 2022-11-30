@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
+import java.lang.Math;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -72,13 +72,13 @@ public class BlueSide extends LinearOpMode {
 
         telemetry.addData("Status", "Running");
         telemetry.update();
-        
-        robot.Forward(0.5 ,16.25 * inch);
+        /**
+        robot.Forward(0.5 ,16.25*(inch));
         sleep(500);
         if (detectionPipeline.getLatestResult() == 1) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
-            robot.StrafeLeft(0.5, 23.5 * inch);
+            robot.StrafeLeft(0.5, 23.5*inch);
             sleep(5000);
         } else if (detectionPipeline.getLatestResult() == 2) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
@@ -88,9 +88,10 @@ public class BlueSide extends LinearOpMode {
         } else if (detectionPipeline.getLatestResult() == 3) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
-            robot.StrafeRight(0.5, 23.5 * inch);
+            robot.StrafeRight(0.5, (23.5 * inch));
             sleep(5000);
-        }
+        **/
+
         /**robot.Reverse(0.5,1000);
         sleep(100);
         robot.Forward(0.5,1000);
