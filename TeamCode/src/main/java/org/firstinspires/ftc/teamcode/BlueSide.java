@@ -22,7 +22,7 @@ public class BlueSide extends LinearOpMode {
     private DcMotor LeftFrontDrive = null;
     private DcMotor LeftBackDrive = null;
     private DcMotor RightBackDrive = null;
-    int inch = 85;
+    int inch = 45;
     public void runOpMode() {
         RightFrontDrive = hardwareMap.dcMotor.get("RFD");
         LeftFrontDrive = hardwareMap.dcMotor.get("LFD");
@@ -74,25 +74,35 @@ public class BlueSide extends LinearOpMode {
         telemetry.addData("Status", "Running");
         telemetry.update();
 
-        robot.Forward(0.5 ,17*(inch));
+        robot.Forward(0.5 ,16*(inch));
         sleep(500);
+        robot.StrafeRight(0.5,150);
+        sleep(100);
+
         if (detectionPipeline.getLatestResult() == 1) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
+            robot.Reverse(0.5,17*(inch));
             robot.StrafeLeft(0.5, 23*inch);
+            robot.StrafeLeft(0.5,100);
+            robot.Forward(0.5,600);
+            robot.Forward(0.5,17*(inch));
             sleep(5000);
         } else if (detectionPipeline.getLatestResult() == 2) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
-            robot.Forward(0.1,150);
+            robot.StrafeLeft(0.5,300);
+            robot.Forward(0.5,600);
             sleep(5000);
         } else if (detectionPipeline.getLatestResult() == 3) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
             robot.StrafeRight(0.5, (23 * inch));
+            robot.Forward(0.5,500);
             sleep(5000);
 
         }
+
         /**robot.Reverse(0.5,1000);
         sleep(100);
         robot.Forward(0.5,1000);
