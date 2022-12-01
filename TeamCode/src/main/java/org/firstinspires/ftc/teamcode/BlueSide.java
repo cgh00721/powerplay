@@ -4,10 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 import java.lang.Math;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvWebcam;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
@@ -38,10 +41,10 @@ public class BlueSide extends LinearOpMode {
 
         telemetry.update();
         //Set wheel diection
-        RightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        LeftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        RightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        LeftBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        RightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        LeftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        RightBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        LeftBackDrive.setDirection(DcMotor.Direction.FORWARD);
 
 
         RightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -55,18 +58,16 @@ public class BlueSide extends LinearOpMode {
         detectionPipeline = new ConeDetectionPipeline();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        WebcamName webcamName = hardwareMap.get(WebcamName.class,"Webcam 1");
+        WebcamName webcamName = hardwareMap.get(WebcamName.class,"isaac");
 
         //OpenCvCamera camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName,cameraMonitorViewId);
+        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
         camera.openCameraDevice();
-        camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+        camera.startStreaming(320, 240);
 
         camera.setPipeline(detectionPipeline);
 
-        //int detected_position = 0;
 
-        //while ((detected_position = detectionPipeline.getLatestResult()) == 0) {}
         Encoder robot = new Encoder(LeftFrontDrive,RightFrontDrive,LeftBackDrive,RightBackDrive);
         waitForStart();
 

@@ -38,10 +38,10 @@ public class RobotCode extends LinearOpMode {
         Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.update();
         //Set wheel diection
-        RightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        LeftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        RightBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        LeftBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        RightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        LeftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        RightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        LeftBackDrive.setDirection(DcMotor.Direction.REVERSE);
 
 
         RightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -59,13 +59,13 @@ public class RobotCode extends LinearOpMode {
             telemetry.addData("Working", "Working");
             telemetry.update();
 //***************************************************************************
-            if(gamepad1.left_bumper) {
+            if(gamepad1.right_bumper) {
                 LeftFrontDrive.setPower(0.5);
                 LeftBackDrive.setPower(0.5);
                 RightFrontDrive.setPower(-0.5);
                 RightBackDrive.setPower(-0.5);
             }
-            else if(gamepad1.right_bumper) {
+            else if(gamepad1.left_bumper) {
                 LeftFrontDrive.setPower(-0.5);
                 LeftBackDrive.setPower(-0.5);
                 RightFrontDrive.setPower(0.5);
