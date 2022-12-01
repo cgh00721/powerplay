@@ -4,10 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import java.lang.Math;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvWebcam;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
@@ -19,6 +22,7 @@ public class RedSide extends LinearOpMode {
     private DcMotor LeftFrontDrive = null;
     private DcMotor LeftBackDrive = null;
     private DcMotor RightBackDrive = null;
+    int inch = 45;
     public void runOpMode() {
         RightFrontDrive = hardwareMap.dcMotor.get("RFD");
         LeftFrontDrive = hardwareMap.dcMotor.get("LFD");
@@ -37,10 +41,10 @@ public class RedSide extends LinearOpMode {
 
         telemetry.update();
         //Set wheel diection
-        RightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        LeftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        RightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        LeftBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        RightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        LeftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        RightBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        LeftBackDrive.setDirection(DcMotor.Direction.FORWARD);
 
 
         RightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -54,47 +58,49 @@ public class RedSide extends LinearOpMode {
         detectionPipeline = new ConeDetectionPipeline();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        //WebcamName webcamName = hardwareMap.get(WebcamName.class,"NAME_OF_CAMERA_IN_CONFIG_FILE");
+        WebcamName webcamName = hardwareMap.get(WebcamName.class,"isaac");
 
-        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        //OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName,cameraMonitorViewId);
+        //OpenCvCamera camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
         camera.openCameraDevice();
-        camera.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+        camera.startStreaming(320, 240);
 
         camera.setPipeline(detectionPipeline);
 
-        //int detected_position = 0;
 
-        //while ((detected_position = detectionPipeline.getLatestResult()) == 0) {}
         Encoder robot = new Encoder(LeftFrontDrive,RightFrontDrive,LeftBackDrive,RightBackDrive);
         waitForStart();
 
         telemetry.addData("Status", "Running");
         telemetry.update();
+
+        robot.Forward(0.5 ,16*(inch));
         sleep(500);
-        robot.Forward(0.5,1000);
+        robot.StrafeRight(0.5,150);
         sleep(100);
-        robot.Reverse(0.5,1000);
-        robot.StrafeRight(0.5,800);
-        robot.Reverse(0.5,300);
-        sleep(500);
+
         if (detectionPipeline.getLatestResult() == 1) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
-            robot.StrafeRight(0.5, 1100);
-            robot.Forward(0.5,1300);
+            robot.Reverse(0.5,17*(inch));
+            robot.StrafeLeft(0.5, 23*inch);
+            robot.StrafeLeft(0.5,250);
+            robot.Forward(0.5,600);
+            robot.Forward(0.5,17*(inch));
             sleep(5000);
         } else if (detectionPipeline.getLatestResult() == 2) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
-            robot.StrafeRight(0.5, 1000);
+            robot.StrafeLeft(0.5,300);
+            robot.Forward(0.5,600);
             sleep(5000);
         } else if (detectionPipeline.getLatestResult() == 3) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
-            robot.StrafeRight(0.5,1000);
-            robot.Reverse(0.5,1050);
+            robot.StrafeRight(0.5, (23 * inch));
+            robot.Forward(0.5,500);
             sleep(5000);
+
         }
     }
 }

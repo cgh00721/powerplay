@@ -84,7 +84,7 @@ public class BlueSide extends LinearOpMode {
             telemetry.update();
             robot.Reverse(0.5,17*(inch));
             robot.StrafeLeft(0.5, 23*inch);
-            robot.StrafeLeft(0.5,100);
+            robot.StrafeLeft(0.5,250);
             robot.Forward(0.5,600);
             robot.Forward(0.5,17*(inch));
             sleep(5000);
@@ -102,32 +102,5 @@ public class BlueSide extends LinearOpMode {
             sleep(5000);
 
         }
-
-        /**robot.Reverse(0.5,1000);
-        sleep(100);
-        robot.Forward(0.5,1000);
-        robot.StrafeRight(0.5,800);
-        robot.Reverse(0.5,300);
-        sleep(500);
-        if (detectionPipeline.getLatestResult() == 1) {
-            telemetry.addData("Result", detectionPipeline.getLatestResult());
-            telemetry.update();
-            robot.StrafeRight(0.5, 1100);
-            robot.Forward(0.5,1300);
-            sleep(5000);
-        } else if (detectionPipeline.getLatestResult() == 2) {
-            telemetry.addData("Result", detectionPipeline.getLatestResult());
-            telemetry.update();
-            robot.StrafeRight(0.5, 1000);
-            robot.Forward(0.1,150);
-            sleep(5000);
-        } else if (detectionPipeline.getLatestResult() == 3) {
-            telemetry.addData("Result", detectionPipeline.getLatestResult());
-            telemetry.update();
-            robot.StrafeRight(0.5,1000);
-            robot.Reverse(0.5,1050);
-            sleep(5000);
-        }
-        **/
     }
 }
