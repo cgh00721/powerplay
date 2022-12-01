@@ -55,12 +55,12 @@ public class BlueSide extends LinearOpMode {
         detectionPipeline = new ConeDetectionPipeline();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        //WebcamName webcamName = hardwareMap.get(WebcamName.class,"NAME_OF_CAMERA_IN_CONFIG_FILE");
+        WebcamName webcamName = hardwareMap.get(WebcamName.class,"Webcam 1");
 
-        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        //OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName,cameraMonitorViewId);
+        //OpenCvCamera camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName,cameraMonitorViewId);
         camera.openCameraDevice();
-        camera.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+        camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
 
         camera.setPipeline(detectionPipeline);
 
