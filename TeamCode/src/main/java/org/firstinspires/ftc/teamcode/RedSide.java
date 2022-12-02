@@ -74,19 +74,16 @@ public class RedSide extends LinearOpMode {
         telemetry.addData("Status", "Running");
         telemetry.update();
 
-        robot.Forward(0.5 ,16*(inch));
+        robot.Forward(0.5 ,14*(inch));
         sleep(500);
-        robot.StrafeRight(0.5,150);
-        sleep(100);
 
         if (detectionPipeline.getLatestResult() == 1) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
-            robot.Reverse(0.5,17*(inch));
-            robot.StrafeLeft(0.5, 23*inch);
             robot.StrafeLeft(0.5,250);
+            sleep(200);
             robot.Forward(0.5,600);
-            robot.Forward(0.5,17*(inch));
+            robot.StrafeLeft(0.5, 23*inch);
             sleep(5000);
         } else if (detectionPipeline.getLatestResult() == 2) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
