@@ -16,7 +16,7 @@ public class RobotCode extends LinearOpMode {
     private DcMotor LeftBackDrive = null;
     private DcMotor RightBackDrive = null;
     private DcMotor Lift = null;
-    private CRServo claw = null;
+    private DcMotor claw = null;
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -29,19 +29,23 @@ public class RobotCode extends LinearOpMode {
         LeftBackDrive = hardwareMap.dcMotor.get("LBD");
         RightBackDrive = hardwareMap.dcMotor.get("RBD");
         Lift = hardwareMap.dcMotor.get("Lift");
-        //claw = hardwareMap.crservo.get("claw");
+        claw = hardwareMap.dcMotor.get("claw");
+        
         RightBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LeftFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LeftBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         RightFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        claw.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        claw.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.update();
         //Set wheel diection
         RightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         LeftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         RightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         LeftBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        claw.setDirection(DcMotor.Direction.FORWARD);
 
 
         RightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -49,6 +53,7 @@ public class RobotCode extends LinearOpMode {
         LeftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LeftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        claw.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
 
@@ -87,14 +92,19 @@ public class RobotCode extends LinearOpMode {
             else {
                 Lift.setPower(0);
             }
-            /**
+            
             if(gamepad1.a){
-                claw.setPosition(0);
+                claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                claw.setPower(1);
+                claw.setTargetPosition(0);
+                
             }
             if(gamepad1.b){
-                claw.setPosition(1);
-            }
-            **/
+                claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                claw.setPower(-1);
+                claw.setTargetPosition(300);
+             }
+            
 //***************************************************************************
 
         }
