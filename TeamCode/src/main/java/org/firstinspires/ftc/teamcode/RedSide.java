@@ -80,9 +80,10 @@ public class RedSide extends LinearOpMode {
         if (detectionPipeline.getLatestResult() == 1) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
-            robot.StrafeLeft(0.5,250);
+            robot.StrafeLeft(0.5,350);
             sleep(200);
-            robot.Forward(0.5,600);
+            robot.Forward(0.5,1000);
+            robot.Reverse(0.5,300);
             robot.StrafeLeft(0.5, 23*inch);
             sleep(5000);
         } else if (detectionPipeline.getLatestResult() == 2) {
@@ -95,7 +96,7 @@ public class RedSide extends LinearOpMode {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();
             robot.StrafeRight(0.5, (23 * inch));
-            robot.Forward(0.5,500);
+            robot.Forward(0.5,600);
             sleep(5000);
 
         }
