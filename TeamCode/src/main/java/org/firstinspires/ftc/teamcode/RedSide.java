@@ -23,22 +23,24 @@ public class RedSide extends LinearOpMode {
     private DcMotor LeftBackDrive = null;
     private DcMotor RightBackDrive = null;
     int inch = 45;
+    private  DcMotor lift = null;
     public void runOpMode() {
         RightFrontDrive = hardwareMap.dcMotor.get("RFD");
         LeftFrontDrive = hardwareMap.dcMotor.get("LFD");
         LeftBackDrive = hardwareMap.dcMotor.get("LBD");
         RightBackDrive = hardwareMap.dcMotor.get("RBD");
+        lift = hardwareMap.dcMotor.get("lift");
 
         RightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LeftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LeftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LeftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LeftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         RightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.update();
         //Set wheel diection
         RightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -51,7 +53,7 @@ public class RedSide extends LinearOpMode {
         RightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LeftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LeftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         telemetry.addData("Status", "waiting for start");
         telemetry.update();
 
@@ -73,7 +75,9 @@ public class RedSide extends LinearOpMode {
 
         telemetry.addData("Status", "Running");
         telemetry.update();
-
+        lift.setPower(1);
+        lift.setTargetPosition(300);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.Forward(0.5 ,14*(inch));
         sleep(500);
 
