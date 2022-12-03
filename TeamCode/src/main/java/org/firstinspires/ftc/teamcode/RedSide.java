@@ -29,7 +29,7 @@ public class RedSide extends LinearOpMode {
         LeftFrontDrive = hardwareMap.dcMotor.get("LFD");
         LeftBackDrive = hardwareMap.dcMotor.get("LBD");
         RightBackDrive = hardwareMap.dcMotor.get("RBD");
-        lift = hardwareMap.dcMotor.get("lift");
+        lift = hardwareMap.dcMotor.get("Lift");
 
         RightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LeftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -76,11 +76,12 @@ public class RedSide extends LinearOpMode {
         telemetry.addData("Status", "Running");
         telemetry.update();
         lift.setPower(1);
-        lift.setTargetPosition(300);
+        lift.setTargetPosition(700);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sleep(600);
         robot.Forward(0.5 ,14*(inch));
         sleep(500);
-
+// blockChain
         if (detectionPipeline.getLatestResult() == 1) {
             telemetry.addData("Result", detectionPipeline.getLatestResult());
             telemetry.update();

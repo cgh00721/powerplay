@@ -108,14 +108,14 @@ public class RobotCode extends LinearOpMode {
             }
             
             if(gamepad1.a){
-                claw.setPower(1);
-                claw.setTargetPosition(0);
+                claw.setPower(-1);
+                claw.setTargetPosition(claw.getCurrentPosition()-100);
                 claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             }
             if(gamepad1.b){
-                claw.setPower(-1);
-                claw.setTargetPosition(300);
+                claw.setPower(1);
+                claw.setTargetPosition(claw.getCurrentPosition()+100);
                 claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
             
