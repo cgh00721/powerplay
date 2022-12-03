@@ -58,7 +58,7 @@ public class RobotCode extends LinearOpMode {
 
 
         waitForStart();
-
+        boolean turbo = true;
         while(opModeIsActive())
         {
             telemetry.addData("Working", Lift.getCurrentPosition());
@@ -76,17 +76,31 @@ public class RobotCode extends LinearOpMode {
                 RightFrontDrive.setPower(0.5);
                 RightBackDrive.setPower(0.5);
             }
-            else {
+            else if(!turbo){
+                LeftFrontDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) - Math.pow(gamepad1.left_stick_x, 5)) * 0.15);
+                LeftBackDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) + Math.pow(gamepad1.left_stick_x, 5)) * 0.15);
+                RightFrontDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) + Math.pow(gamepad1.left_stick_x, 5)) * 0.15);
+                RightBackDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) - Math.pow(gamepad1.left_stick_x, 5)) * 0.15);
+            }
+            else if (turbo){
                 //Set Power using cubic control
                 LeftFrontDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) - Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
                 LeftBackDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) + Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
                 RightFrontDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) + Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
                 RightBackDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) - Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
             }
-            if(gamepad1.dpad_up && Lift.getCurrentPosition() <= 2200){
+            if(gamepad1.y){
+                if(!turbo){
+                    turbo = true;
+                }
+                else {
+                    turbo = true;
+                }
+            }
+            if(gamepad1.dpad_up){
                 Lift.setPower(0.5);
             }
-            else if(gamepad1.dpad_down && Lift.getCurrentPosition() >= 0) {
+            else if(gamepad1.dpad_down) {
                 Lift.setPower(-0.5);
             }
             else {
