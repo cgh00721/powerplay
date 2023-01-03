@@ -15,14 +15,15 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 
-@Autonomous(name="RedSide", group="Pushbot")
-public class RedSide extends LinearOpMode {
+@Autonomous(name="RedSideFullPlay", group="Pushbot")
+public class RedSideFullPlay extends LinearOpMode {
     ConeDetectionPipeline detectionPipeline;
     private DcMotor RightFrontDrive = null;
     private DcMotor LeftFrontDrive = null;
     private DcMotor LeftBackDrive = null;
     private DcMotor RightBackDrive = null;
     int inch = 45;
+    int col = 0;
     private  DcMotor lift = null;
     public void runOpMode() {
         RightFrontDrive = hardwareMap.dcMotor.get("RFD");
@@ -83,27 +84,21 @@ public class RedSide extends LinearOpMode {
         sleep(500);
 // blockChain
         if (detectionPipeline.getLatestResult() == 1) {
-            telemetry.addData("Result", detectionPipeline.getLatestResult());
-            telemetry.update();
-            robot.StrafeLeft(0.5,350);
-            sleep(200);
-            robot.Forward(0.5,1000);
-            robot.Reverse(0.5,300);
-            robot.StrafeLeft(0.5, 23*inch);
-            sleep(5000);
+            col = 1;
         } else if (detectionPipeline.getLatestResult() == 2) {
-            telemetry.addData("Result", detectionPipeline.getLatestResult());
-            telemetry.update();
-            robot.StrafeLeft(0.5,300);
-            robot.Forward(0.5,600);
-            sleep(5000);
+            col = 2;
         } else if (detectionPipeline.getLatestResult() == 3) {
-            telemetry.addData("Result", detectionPipeline.getLatestResult());
-            telemetry.update();
-            robot.StrafeRight(0.5, (23 * inch));
-            robot.Forward(0.5,600);
-            sleep(5000);
-
+            col = 3;
         }
+    robot.Reverse(0.5,13*(inch));
+    robot.StrafeLeft(0.5, 12*(inch));
+    robot.Forward(0.5, 6*(inch));
+    //Claw moves
+    robot.Reverse(0.5,1*(inch));
+    robot.StrafeLeft(0.5,2*(inch));
+    Robot.TurnLeft(0.5,13*(inch));
+    robot.Forward(0.5,6*(inch));    
+    //claw moves
+    
     }
 }
