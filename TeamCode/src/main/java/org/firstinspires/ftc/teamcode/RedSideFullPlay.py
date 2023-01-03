@@ -90,15 +90,38 @@ public class RedSideFullPlay extends LinearOpMode {
         } else if (detectionPipeline.getLatestResult() == 3) {
             col = 3;
         }
+    //navigate to high junction
     robot.Reverse(0.5,13*(inch));
-    robot.StrafeLeft(0.5, 12*(inch));
-    robot.Forward(0.5, 6*(inch));
+    robot.StrafeLeft(0.5, 6*(inch));
+    robot.Forward(0.5, 12*(inch));
+    robot.StrafeLeft(0.5,2*(inch));
     //Claw moves
     robot.Reverse(0.5,1*(inch));
-    robot.StrafeLeft(0.5,2*(inch));
-    Robot.TurnLeft(0.5,13*(inch));
-    robot.Forward(0.5,6*(inch));    
+    robot.StrafeRight(0.5,2*(inch));
+    robot.TurnLeft(0.5,13*(inch));
+    robot.Forward(0.5,12*(inch));    
     //claw moves
+    for(int i = 0; i < 3; i++){
+        robot.Reverse(0.5,12*(inch));
+        robot.TurnLeft(0.5,13*(inch));
+        robot.StrafeLeft(0.5,2*(inch));
+        robot.Forward(0.5,1*(inch));
+        //Claw moves
+        robot.Reverse(0.5,1*(inch));
+        robot.StrafeRight(0.5,2*(inch));
+        robot.TurnLeft(0.5,13*(inch));
+        robot.Forward(0.5,12*(inch));    
+        //claw moves    
+    }
+    if(col == 1){
+        
+    }
+    else if(col ==2){
+    
+    }
+    else{
+        
+    }
     
     }
 }
