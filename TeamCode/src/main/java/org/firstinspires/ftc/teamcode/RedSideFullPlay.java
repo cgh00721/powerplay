@@ -80,7 +80,7 @@ public class RedSideFullPlay extends LinearOpMode {
         lift.setTargetPosition(700);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         sleep(600);
-        robot.Forward(0.5 ,14*(inch));
+        robot.Forward(0.5 ,16*(inch));
         sleep(500);
 // blockChain
         if (detectionPipeline.getLatestResult() == 1) {
@@ -91,39 +91,33 @@ public class RedSideFullPlay extends LinearOpMode {
             col = 3;
         }
     //navigate to high junction
-    robot.Reverse(0.5,13*(inch));
-    robot.StrafeLeft(0.5, 6*(inch));
-    robot.Forward(0.5, 12*(inch));
-    robot.StrafeLeft(0.5,2*(inch));
-    //Claw moves
-    robot.Reverse(0.5,1*(inch));
-    robot.StrafeRight(0.5,2*(inch));
-    robot.Forward(0.5,6*(inch));
-    robot.TurnRight(0.5,6*(inch));
-    robot.Forward(0.5,13*(inch));
-    //claw moves
-    robot.Reverse(0.5,13*(inch));
-    robot.TurnLeft(0.5,6*(inch));
-    robot.StrafeLeft(0.5,2*(inch));
-    robot.Forward(0.5,1*(inch));
-    //Claw moves
-    /**
-    robot.Reverse(0.5,1*(inch));
-    robot.StrafeRight(0.5,2*(inch));
-    robot.TurnLeft(0.5,13*(inch));
-    robot.Forward(0.5,12*(inch));
-    //claw moves
-    **/
 
-    robot.Reverse(0.5,1*(inch));
+    robot.Reverse(0.6,14*(inch));
+    robot.StrafeLeft(0.7, 27*(inch));
+    robot.Forward(0.7, 28*(inch));
+    robot.StrafeLeft(0.7,17*(inch));
+    robot.Forward(0.7,3*(inch));
+    //Claw moves
+    robot.Reverse(0.7,3*(inch));
+    robot.StrafeRight(0.7,11*(inch));
+    robot.Forward(0.7,24*(inch));
+    robot.TurnLeft(0.7,19*(inch));
+    robot.Forward(0.7,46*(inch));
+    //claw moves
+    robot.Reverse(0.7,43*(inch));
+    robot.TurnLeft(0.7,19*(inch));
+    //robot.Forward(0.7,3*(inch));
+    //Claw moves
+
+    robot.Forward(0.7,26*(inch));
     if(col == 1){
-        robot.StrafeRight(0.5,1*(inch));
+
     }
-    else if(col ==2){
-        robot.StrafeRight(0.5,3*(inch));
+    else if(col == 2){
+        robot.StrafeLeft(0.7,25*(inch));
     }
     else{
-        robot.StrafeRight(0.5,6*(inch));
+        robot.StrafeLeft(0.7,38*(inch));
     }
     
     }
