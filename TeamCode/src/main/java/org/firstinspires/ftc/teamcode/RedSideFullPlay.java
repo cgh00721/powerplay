@@ -114,6 +114,7 @@ public class RedSideFullPlay extends LinearOpMode {
     robot.Forward(0.5,12*(inch));
     //claw moves
     **/
+
     robot.Reverse(0.5,1*(inch));
     if(col == 1){
         robot.StrafeRight(0.5,1*(inch));
