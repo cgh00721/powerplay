@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -22,14 +23,15 @@ import org.openftc.easyopencv.OpenCvWebcam;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-
+@Config
 @Autonomous(name="OdometryTest", group="Pushbot")
 public class OdometryTest extends LinearOpMode {
     ConeDetectionPipeline detectionPipeline;
     int inch = 45;
     int col = 0;
     private  DcMotor lift = null;
-    public void runOpMode() throws InterruptedException{
+    @Override
+    public void runOpMode() throws InterruptedException {
         /**
         lift = hardwareMap.dcMotor.get("Lift");
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -44,8 +46,8 @@ public class OdometryTest extends LinearOpMode {
         camera.startStreaming(320, 240);
         camera.setPipeline(detectionPipeline);
          **/
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
 
         Trajectory trajectory = drive.trajectoryBuilder(new Pose2d(35.31, -60.75, Math.toRadians(90.00)))
