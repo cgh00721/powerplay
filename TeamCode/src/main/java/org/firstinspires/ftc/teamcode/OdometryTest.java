@@ -32,7 +32,7 @@ public class OdometryTest extends LinearOpMode {
     private  DcMotor lift = null;
     @Override
     public void runOpMode() throws InterruptedException {
-        /**
+
         lift = hardwareMap.dcMotor.get("Lift");
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -45,28 +45,62 @@ public class OdometryTest extends LinearOpMode {
         camera.openCameraDevice();
         camera.startStreaming(320, 240);
         camera.setPipeline(detectionPipeline);
-         **/
+
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-
-        Trajectory trajectory = drive.trajectoryBuilder(new Pose2d(35.31, -60.75, Math.toRadians(90.00)))
-                .splineTo(new Vector2d(36.23, -37.89), Math.toRadians(87.69))
-                .splineTo(new Vector2d(64.26, -35.68), Math.toRadians(4.51))
-                .splineTo(new Vector2d(59.83, -12.81), Math.toRadians(100.95))
-                .splineTo(new Vector2d(35.12, -11.89), Math.toRadians(177.86))
-                .splineTo(new Vector2d(12.63, -12.26), Math.toRadians(180.94))
-                .splineTo(new Vector2d(11.34, -34.57), Math.toRadians(266.69))
-                .splineTo(new Vector2d(9.86, -58.91), Math.toRadians(266.53))
-                .splineTo(new Vector2d(35.49, -60.94), Math.toRadians(-2.46))
-                .splineTo(new Vector2d(33.28, -59.83), Math.toRadians(86.82))
+        Trajectory ToCone = drive.trajectoryBuilder(new Pose2d(36.60, -66.28, Math.toRadians(90.00)))
+                .splineTo(new Vector2d(36.6, -49.14), Math.toRadians(90.00))
                 .build();
-
+        Trajectory ToPole = drive.trajectoryBuilder(new Pose2d(36.6, -49.14, Math.toRadians(90.00)))
+                .splineTo(new Vector2d(36.6,-66), Math.toRadians(90.00))
+                .splineTo(new Vector2d(13.18, -61.49), Math.toRadians(180.47))
+                .splineTo(new Vector2d(11.15, -36.23), Math.toRadians(94.59))
+                .splineTo(new Vector2d(0.28, -34.39), Math.toRadians(88.22))
+                .build();
+        Trajectory ToPickup = drive.trajectoryBuilder(new Pose2d(0.28, -34.39, Math.toRadians(88.22)))
+                .splineTo(new Vector2d(11.15, -13.18), Math.toRadians(88.06))
+                .splineTo(new Vector2d(11.15, -13.18), Math.toRadians(88.06))
+                .splineTo(new Vector2d(60.20, -11.15), Math.toRadians(2.37))
+                .build();
+        Trajectory BackToPole =  drive.trajectoryBuilder(new Pose2d(60.20, -11.15, Math.toRadians(2.37)))
+                .splineTo(new Vector2d(11.15, -13.18), Math.toRadians(88.06))
+                .splineTo(new Vector2d(11.15, -13.18), Math.toRadians(88.06))
+                .splineTo(new Vector2d(0.28, -34.39), Math.toRadians(88.22))
+                .build();
+        Trajectory to1 = drive.trajectoryBuilder(new Pose2d(0.28, -34.39, Math.toRadians(88.22)))
+                .splineTo(new Vector2d(11.89, -35.68), Math.toRadians(-0.88))
+                .build();
+        Trajectory to2 = drive.trajectoryBuilder(new Pose2d(0.28, -34.39, Math.toRadians(88.22)))
+                .splineTo(new Vector2d(36.23, -35.86), Math.toRadians(-0.43))
+                .build();
+        Trajectory to3 = drive.trajectoryBuilder(new Pose2d(0.28, -34.39, Math.toRadians(88.22)))
+                .splineTo(new Vector2d(61.12, -35.68), Math.toRadians(0.42))
+                .build();
         waitForStart();
 
         if (isStopRequested()) return;
 
-        drive.followTrajectory(trajectory);
+        drive.followTrajectory(ToCone);
+        if (detectionPipeline.getLatestResult() == 1) {
+            col = 1;
+        } else if (detectionPipeline.getLatestResult() == 2) {
+            col = 2;
+        } else if (detectionPipeline.getLatestResult() == 3) {
+            col = 3;
+        }
+        drive.followTrajectory(ToPole);
+        drive.followTrajectory(ToPickup);
+        drive.followTrajectory(BackToPole);
+        if(col == 1){
+            drive.followTrajectory(to1);
+        }
+        else if(col == 2){
+            drive.followTrajectory(to2);
+        }
+        else{
+            drive.followTrajectory(to3);
+        }
 
         Pose2d poseEstimate = drive.getPoseEstimate();
         telemetry.addData("finalX", poseEstimate.getX());
