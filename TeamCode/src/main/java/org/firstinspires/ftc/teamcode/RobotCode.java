@@ -16,7 +16,7 @@ public class RobotCode extends LinearOpMode {
     private DcMotor LeftBackDrive = null;
     private DcMotor RightBackDrive = null;
     private DcMotor Lift = null;
-    private DcMotor claw = null;
+    private Servo claw = null;
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -29,7 +29,7 @@ public class RobotCode extends LinearOpMode {
         LeftBackDrive = hardwareMap.dcMotor.get("LBD");
         RightBackDrive = hardwareMap.dcMotor.get("RBD");
         Lift = hardwareMap.dcMotor.get("Lift");
-        claw = hardwareMap.dcMotor.get("claw");
+        claw = hardwareMap.servo.get("claw");
         
         RightBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LeftFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -37,15 +37,12 @@ public class RobotCode extends LinearOpMode {
         RightFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        claw.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        claw.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.update();
         //Set wheel diection
         RightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         LeftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         RightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         LeftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        claw.setDirection(DcMotor.Direction.FORWARD);
 
 
         RightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -53,10 +50,9 @@ public class RobotCode extends LinearOpMode {
         LeftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LeftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        claw.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
-
+        double pos = claw.getPosition();
         waitForStart();
         boolean turbo = true;
         while(opModeIsActive())
@@ -108,17 +104,13 @@ public class RobotCode extends LinearOpMode {
             }
             
             if(gamepad1.a){
-                claw.setPower(-1);
-                claw.setTargetPosition(claw.getCurrentPosition()-100);
-                claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                claw.setPosition(pos);
 
             }
             if(gamepad1.b){
-                claw.setPower(1);
-                claw.setTargetPosition(claw.getCurrentPosition()+100);
-                claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                claw.setPosition(1.0);
             }
-            
+
 //***************************************************************************
 
         }
