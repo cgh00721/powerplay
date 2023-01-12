@@ -56,33 +56,41 @@ public class OdometryTest extends LinearOpMode {
 
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        // TODO: update offset from wall in the y coord
+         Pose2d startPose = new Pose2d(36, -60, Math.toRadians(90.00));
+        drive.setPoseEstimate(startPose);
 
 
-        Trajectory ToCone = drive.trajectoryBuilder(new Pose2d(36.60, -66.28, Math.toRadians(90.00)))
-                .splineTo(new Vector2d(36.6,-49.14), Math.toRadians(90.00))
+        Trajectory ToCone = drive.trajectoryBuilder(startPose)
+                .splineTo(new Vector2d(36,-45), Math.toRadians(90.00))
                 .build();
-        Trajectory ToPole = drive.trajectoryBuilder(new Pose2d(36.6, -49.14, Math.toRadians(90.00)))
-                .splineTo(new Vector2d(36.6,-66), Math.toRadians(90.00))
-                .splineTo(new Vector2d(13.18, -61.49), Math.toRadians(180.47))
-                .splineTo(new Vector2d(11.15, -36.23), Math.toRadians(94.59))
-                .splineTo(new Vector2d(0.28, -34.39), Math.toRadians(88.22))
+        //these strafes might need to change to actual strafes
+        Trajectory ToPole = drive.trajectoryBuilder(ToCone.end())
+                .splineTo(new Vector2d(36,-60), Math.toRadians(90.00))
+                .splineTo(new Vector2d(12, -60), Math.toRadians(90.00))
+                .splineTo(new Vector2d(12, -36), Math.toRadians(90.00))
+                .splineTo(new Vector2d(0, -34), Math.toRadians(90.00))
                 .build();
-        Trajectory ToPickup = drive.trajectoryBuilder(new Pose2d(0.28, -34.39, Math.toRadians(88.22)))
-                .splineTo(new Vector2d(11.15, -13.18), Math.toRadians(88.06))
-                .splineTo(new Vector2d(60.20, -11.15), Math.toRadians(2.37))
+        //might need to change y in second command to -12, just depends on how the spline turns
+        Trajectory ToPickup = drive.trajectoryBuilder(ToPole.end())
+                .splineTo(new Vector2d(12,36),Math.toRadians(90.00))
+                .splineTo(new Vector2d(12, -24), Math.toRadians(90.00))
+                .splineTo(new Vector2d(60, -12), Math.toRadians(00.00))
                 .build();
-        Trajectory BackToPole =  drive.trajectoryBuilder(new Pose2d(60.20, -11.15, Math.toRadians(2.37)))
-                .splineTo(new Vector2d(11.15, -13.18), Math.toRadians(88.06))
-                .splineTo(new Vector2d(0.28, -34.39), Math.toRadians(88.22))
+        Trajectory BackToPole =  drive.trajectoryBuilder(ToPickup.end())
+                .splineTo(new Vector2d(12, -12), Math.toRadians(00.00))
+                .splineTo(new Vector2d(12,-36),Math.toRadians(90.00))
+                .splineTo(new Vector2d(0, -34), Math.toRadians(90.00))
                 .build();
-        Trajectory to1 = drive.trajectoryBuilder(new Pose2d(0.28, -34.39, Math.toRadians(88.22)))
-                .splineTo(new Vector2d(11.89, -35.68), Math.toRadians(-0.88))
+        //could change these to strafes if the turning is messy, also, y is off by a factor of 2 from previous one. watch for issues there
+        Trajectory to1 = drive.trajectoryBuilder(BackToPole.end())
+                .splineTo(new Vector2d(12, -36), Math.toRadians(0))
                 .build();
-        Trajectory to2 = drive.trajectoryBuilder(new Pose2d(0.28, -34.39, Math.toRadians(88.22)))
-                .splineTo(new Vector2d(36.23, -35.86), Math.toRadians(-0.43))
+        Trajectory to2 = drive.trajectoryBuilder(BackToPole.end())
+                .splineTo(new Vector2d(36, -36), Math.toRadians(0))
                 .build();
-        Trajectory to3 = drive.trajectoryBuilder(new Pose2d(0.28, -34.39, Math.toRadians(88.22)))
-                .splineTo(new Vector2d(61.12, -35.68), Math.toRadians(0.42))
+        Trajectory to3 = drive.trajectoryBuilder(BackToPole.end())
+                .splineTo(new Vector2d(60, -36), Math.toRadians(0))
                 .build();
 
         waitForStart();
@@ -90,7 +98,6 @@ public class OdometryTest extends LinearOpMode {
         if (isStopRequested()) return;
 
         drive.followTrajectory(ToCone);
-
          if (detectionPipeline.getLatestResult() == 1) {
             col = 1;
         } else if (detectionPipeline.getLatestResult() == 2) {
@@ -100,7 +107,6 @@ public class OdometryTest extends LinearOpMode {
         }
 
         drive.followTrajectory(ToPole);
-
         drive.followTrajectory(ToPickup);
         drive.followTrajectory(BackToPole);
         if(col == 1){

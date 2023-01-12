@@ -52,7 +52,6 @@ public class RobotCode extends LinearOpMode {
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
-        double pos = claw.getPosition();
         waitForStart();
         boolean turbo = true;
         while(opModeIsActive())
@@ -100,11 +99,11 @@ public class RobotCode extends LinearOpMode {
                 Lift.setPower(-0.5);
             }
             else {
-                Lift.setPower(0);
+                Lift.setPower(0.0);
             }
             
             if(gamepad1.a){
-                claw.setPosition(pos);
+                claw.setPosition(0.0);
 
             }
             if(gamepad1.b){
