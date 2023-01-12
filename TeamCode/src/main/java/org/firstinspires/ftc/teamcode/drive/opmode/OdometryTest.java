@@ -134,8 +134,8 @@ public class OdometryTest extends LinearOpMode {
 
 
     }
-    double open = 0.0;
-    double closed = 1.0;
+    double open = 0.55;
+    double closed = 0.0;
     private void grab(){
         claw.setPosition(open);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);

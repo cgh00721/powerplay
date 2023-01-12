@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -7,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Blinker;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
-
+@Disabled
 @TeleOp
 
 public class ColorSensorTest extends LinearOpMode {
@@ -15,7 +16,7 @@ public class ColorSensorTest extends LinearOpMode {
     private DcMotor lFD;
     private DcMotor rBD;
     private DcMotor rFD;
-        
+
     public void runOpMode() {
         LineFollower lineFollower = new LineFollower(
             hardwareMap.get(ColorSensor.class, "left_colorsensor"),

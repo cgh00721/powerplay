@@ -103,11 +103,11 @@ public class RobotCode extends LinearOpMode {
             }
             
             if(gamepad1.a){
-                claw.setPosition(0.0);
+                claw.setPosition(0.55);
 
             }
             if(gamepad1.b){
-                claw.setPosition(1.0);
+                claw.setPosition(0.0);
             }
 
 //***************************************************************************

@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
-
+@Disabled
 public class LineFollower {
     public ColorSensor left_colorsensor;
     public ColorSensor right_colorsensor;
