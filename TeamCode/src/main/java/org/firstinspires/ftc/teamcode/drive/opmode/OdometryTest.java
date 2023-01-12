@@ -19,6 +19,8 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import java.lang.Math;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -39,12 +41,14 @@ public class OdometryTest extends LinearOpMode {
     int inch = 45;
     int col = 0;
     private  DcMotor lift = null;
-     @Override
+    private Servo claw = null;
+    @Override
     public void runOpMode() throws InterruptedException {
         lift = hardwareMap.dcMotor.get("Lift");
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        claw = hardwareMap.servo.get("claw");
 
         detectionPipeline = new ConeDetectionPipeline();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -130,4 +134,26 @@ public class OdometryTest extends LinearOpMode {
 
 
     }
+    double open = 0.0;
+    double closed = 1.0;
+    private void grab(){
+        claw.setPosition(open);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setTargetPosition(0);
+        lift.setPower(1);
+        //might stall prgm b/c of constant readjustment
+        while(lift.isBusy()){}
+        claw.setPosition(closed);
+    }
+    private void drop(){
+        claw.setPosition(closed);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setTargetPosition(100);
+        lift.setPower(1);
+        //might stall prgm b/c of constant readjustment
+        while(lift.isBusy()){}
+        claw.setPosition(open);
+    }
+
 }
+
