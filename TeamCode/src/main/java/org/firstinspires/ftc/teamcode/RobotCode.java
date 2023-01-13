@@ -54,13 +54,12 @@ public class RobotCode extends LinearOpMode {
         LeftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LeftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        int encoderlocation = 0;
+        int encoderlocation = -1;
         waitForStart();
         boolean turbo = true;
         while(opModeIsActive())
         {
-            telemetry.addData("Working", Lift.getCurrentPosition());
+            telemetry.addData("Working", Lift.getCurrentPosition() +", "+ top.blue());
             telemetry.update();
 //***************************************************************************
             if(gamepad1.right_bumper) {
@@ -96,29 +95,33 @@ public class RobotCode extends LinearOpMode {
                     turbo = true;
                 }
             }
-            if(gamepad1.dpad_up && top.blue()<200){
+            if(gamepad1.dpad_up && top.blue()<1500){
                 Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 Lift.setPower(0.5);
                 encoderlocation = Lift.getCurrentPosition();
             }
-            else if(gamepad1.dpad_down && bottom.blue()<200) {
+            else if(gamepad1.dpad_down && bottom.blue()<1500) {
                 Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 Lift.setPower(-0.5);
                 encoderlocation = Lift.getCurrentPosition();
 
             }
+
             else {
-                Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                Lift.setTargetPosition(encoderlocation);
-                Lift.setPower(0.5);
+                if(encoderlocation != -1){
+                    Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    Lift.setTargetPosition(encoderlocation);
+                    Lift.setPower(0.5);
+                }
             }
-            if(top.blue()>200){
+
+            if(top.blue()>1500){
                 //may need to change num
                 encoderlocation = 2000;
             }
-            if(bottom.blue()>200){
+            if(bottom.blue()>1500){
                 encoderlocation = 0;
             }
             if(gamepad1.a){
