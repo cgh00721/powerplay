@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -17,6 +18,8 @@ public class RobotCode extends LinearOpMode {
     private DcMotor RightBackDrive = null;
     private DcMotor Lift = null;
     private Servo claw = null;
+    private ColorSensor top;
+    private ColorSensor bottom;
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -30,7 +33,8 @@ public class RobotCode extends LinearOpMode {
         RightBackDrive = hardwareMap.dcMotor.get("RBD");
         Lift = hardwareMap.dcMotor.get("Lift");
         claw = hardwareMap.servo.get("claw");
-        
+        bottom = hardwareMap.get(ColorSensor.class, "bottom");
+        top = hardwareMap.get(ColorSensor.class, "top");
         RightBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LeftFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LeftBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -51,7 +55,7 @@ public class RobotCode extends LinearOpMode {
         LeftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-
+        int encoderlocation = 0;
         waitForStart();
         boolean turbo = true;
         while(opModeIsActive())
@@ -92,22 +96,31 @@ public class RobotCode extends LinearOpMode {
                     turbo = true;
                 }
             }
-            if(gamepad1.dpad_up){
+            if(gamepad1.dpad_up && top.blue()<200){
                 Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 Lift.setPower(0.5);
+                encoderlocation = Lift.getCurrentPosition();
             }
-            else if(gamepad1.dpad_down) {
+            else if(gamepad1.dpad_down && bottom.blue()<200) {
                 Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 Lift.setPower(-0.5);
+                encoderlocation = Lift.getCurrentPosition();
+
             }
             else {
                 Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                Lift.setTargetPosition(Lift.getCurrentPosition());
+                Lift.setTargetPosition(encoderlocation);
                 Lift.setPower(0.5);
             }
-            
+            if(top.blue()>200){
+                //may need to change num
+                encoderlocation = 2000;
+            }
+            if(bottom.blue()>200){
+                encoderlocation = 0;
+            }
             if(gamepad1.a){
                 claw.setPosition(0.55);
 
