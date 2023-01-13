@@ -93,13 +93,19 @@ public class RobotCode extends LinearOpMode {
                 }
             }
             if(gamepad1.dpad_up){
+                Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 Lift.setPower(0.5);
             }
             else if(gamepad1.dpad_down) {
+                Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 Lift.setPower(-0.5);
             }
             else {
-                Lift.setPower(0.0);
+                Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                Lift.setTargetPosition(Lift.getCurrentPosition());
+                Lift.setPower(0.5);
             }
             
             if(gamepad1.a){
