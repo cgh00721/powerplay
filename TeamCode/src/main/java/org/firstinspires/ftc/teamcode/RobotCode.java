@@ -40,7 +40,7 @@ public class RobotCode extends LinearOpMode {
         LeftBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         RightFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.update();
         //Set wheel diection
         RightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -59,7 +59,7 @@ public class RobotCode extends LinearOpMode {
         boolean turbo = true;
         while(opModeIsActive())
         {
-            telemetry.addData("Working", Lift.getCurrentPosition() +", "+ top.blue());
+            telemetry.addData("Working", Lift.getCurrentPosition() +", " + encoderlocation +", " + bottom.blue());
             telemetry.update();
 //***************************************************************************
             if(gamepad1.right_bumper) {
@@ -87,34 +87,35 @@ public class RobotCode extends LinearOpMode {
                 RightFrontDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) + Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
                 RightBackDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) - Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
             }
-            if(gamepad1.y){
+            if(gamepad1.a){
                 if(!turbo){
                     turbo = true;
                 }
                 else {
-                    turbo = true;
+                    turbo = false;
                 }
             }
-            if(gamepad1.dpad_up && top.blue()<1500){
-                Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                Lift.setPower(0.5);
+            if(top.blue()<1500 &&( gamepad2.left_stick_y>0.05)){
+                Lift.setPower(gamepad2.left_stick_y);
+                //Lift.setPower(-0.5);
                 encoderlocation = Lift.getCurrentPosition();
             }
-            else if(gamepad1.dpad_down && bottom.blue()<1500) {
-                Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                Lift.setPower(-0.5);
+            //&& bottom.blue()<1500
+            else if(gamepad2.left_stick_y<-0.05 ) {
+                Lift.setPower(gamepad2.left_stick_y);
                 encoderlocation = Lift.getCurrentPosition();
 
             }
 
             else {
-                if(encoderlocation != -1){
+                /**if(encoderlocation != -1){
                     Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                     Lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                     Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     Lift.setTargetPosition(encoderlocation);
                     Lift.setPower(0.5);
-                }
+                }**/
+                Lift.setPower(0.0);
             }
 
             if(top.blue()>1500){
@@ -124,11 +125,11 @@ public class RobotCode extends LinearOpMode {
             if(bottom.blue()>1500){
                 encoderlocation = 0;
             }
-            if(gamepad1.a){
-                claw.setPosition(0.55);
+            if(gamepad2.a){
+                claw.setPosition(0.50);
 
             }
-            if(gamepad1.b){
+            if(gamepad2.b){
                 claw.setPosition(0.0);
             }
 

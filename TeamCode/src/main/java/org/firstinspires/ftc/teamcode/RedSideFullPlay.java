@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -16,15 +18,20 @@ public class RedSideFullPlay extends LinearOpMode {
     private DcMotor LeftFrontDrive = null;
     private DcMotor LeftBackDrive = null;
     private DcMotor RightBackDrive = null;
+    private Servo claw = null;
+
     int inch = 45;
     int col = 0;
     private  DcMotor lift = null;
+    private ColorSensor bottom;
     public void runOpMode() {
         RightFrontDrive = hardwareMap.dcMotor.get("RFD");
         LeftFrontDrive = hardwareMap.dcMotor.get("LFD");
         LeftBackDrive = hardwareMap.dcMotor.get("LBD");
         RightBackDrive = hardwareMap.dcMotor.get("RBD");
         lift = hardwareMap.dcMotor.get("Lift");
+        claw = hardwareMap.servo.get("claw");
+        bottom = hardwareMap.get(ColorSensor.class, "bottom");
 
         RightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LeftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -67,16 +74,18 @@ public class RedSideFullPlay extends LinearOpMode {
 
         Encoder7959 robot = new Encoder7959(LeftFrontDrive,RightFrontDrive,LeftBackDrive,RightBackDrive);
         waitForStart();
-
+        claw.setPosition(closed);
         telemetry.addData("Status", "Running");
         telemetry.update();
-        lift.setPower(1);
-        lift.setTargetPosition(700);
+        sleep(300);
+        lift.setTargetPosition(-700);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(-1);
         sleep(600);
-        robot.Forward(0.5 ,16*(inch));
+        robot.Forward(0.5 ,12*(inch));
         sleep(500);
-// blockChain
+        robot.StrafeRight(0.3,2*(inch));
+        sleep(300);
         if (detectionPipeline.getLatestResult() == 1) {
             col = 1;
         } else if (detectionPipeline.getLatestResult() == 2) {
@@ -84,35 +93,86 @@ public class RedSideFullPlay extends LinearOpMode {
         } else if (detectionPipeline.getLatestResult() == 3) {
             col = 3;
         }
-    //navigate to high junction
+        telemetry.addData("Status", col);
+        telemetry.update();
+        robot.StrafeLeft(0.3,2*(inch));
 
-    robot.Reverse(0.6,14*(inch));
-    robot.StrafeLeft(0.7, 27*(inch));
-    robot.Forward(0.7, 28*(inch));
-    robot.StrafeLeft(0.7,17*(inch));
-    robot.Forward(0.7,3*(inch));
-    //Claw moves
-    robot.Reverse(0.7,3*(inch));
-    robot.StrafeRight(0.7,11*(inch));
-    robot.Forward(0.7,24*(inch));
-    robot.TurnLeft(0.7,19*(inch));
-    robot.Forward(0.7,46*(inch));
-    //claw moves
-    robot.Reverse(0.7,43*(inch));
-    robot.TurnLeft(0.7,19*(inch));
-    //robot.Forward(0.7,3*(inch));
-    //Claw moves
-
-    robot.Forward(0.7,26*(inch));
+        //navigate to high junction
+        /**
+         * robot.Reverse(0.6,14*(inch));
+         *     robot.StrafeLeft(0.7, 27*(inch));
+         *     robot.Forward(0.7, 28*(inch));
+         *     robot.StrafeLeft(0.7,17*(inch));
+         *     robot.Forward(0.7,3*(inch));
+         *     //Claw moves
+         *     robot.Reverse(0.7,3*(inch));
+         *     robot.StrafeRight(0.7,11*(inch));
+         *     robot.Forward(0.7,24*(inch));
+         *     robot.TurnLeft(0.7,19*(inch));
+         *     robot.Forward(0.7,46*(inch));
+         *     //claw moves
+         *     robot.Reverse(0.7,43*(inch));
+         *     robot.TurnLeft(0.7,19*(inch));
+         *
+         */
+    robot.Forward(0.7,20*(inch));
+    robot.Reverse(0.5,3*(inch));
+    robot.StrafeLeft(0.7, 18*(inch));
+    claw.setPosition(closed);
+    lift.setTargetPosition(-1850);
+    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    lift.setPower(-1);
+    while(lift.isBusy()){}
+    sleep(400);
+    robot.Forward(0.7,(int)(5*(inch)));
+    sleep(400);
+    claw.setPosition(open);
+    sleep(400);
+    robot.Reverse(0.5,(int)3.5*(inch));
+    lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    robot.Reverse(0.7,4*(inch));
+    claw.setPosition(closed);
     if(col == 1){
+        telemetry.addData("Status", "1");
+        telemetry.update();
+        robot.StrafeLeft(0.7,13*(inch));
+        robot.Forward(0.5,3*(inch));
 
     }
     else if(col == 2){
-        robot.StrafeLeft(0.7,25*(inch));
+        telemetry.addData("Status", "2");
+        telemetry.update();
+        robot.StrafeRight(0.7,11*(inch));
+        robot.Forward(0.5,3*(inch));
     }
     else{
-        robot.StrafeLeft(0.7,38*(inch));
+        telemetry.addData("Status", "3");
+        telemetry.update();
+        robot.StrafeRight(0.7,41*(inch));
+        robot.Forward(0.5,3*(inch));
+
     }
     
     }
+    double open = 0.50;
+    double closed = 0.0;
+    private void grab(){
+        claw.setPosition(open);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setTargetPosition(0);
+        lift.setPower(1);
+        //might stall prgm b/c of constant readjustment
+        while(lift.isBusy()){}
+        claw.setPosition(closed);
+    }
+    private void drop(){
+        claw.setPosition(closed);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setTargetPosition(000);
+        lift.setPower(-1);
+        //might stall prgm b/c of constant readjustment
+        while(lift.isBusy()){}
+        claw.setPosition(open);
+    }
+
 }
