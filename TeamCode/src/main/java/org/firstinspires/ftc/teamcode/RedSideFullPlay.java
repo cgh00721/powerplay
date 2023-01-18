@@ -124,7 +124,7 @@ public class RedSideFullPlay extends LinearOpMode {
     lift.setPower(-1);
     while(lift.isBusy()){}
     sleep(400);
-    robot.Forward(0.7,(int)(5*(inch)));
+    robot.Forward(0.7,(5*(inch)));
     sleep(400);
     claw.setPosition(open);
     sleep(400);
