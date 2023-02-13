@@ -15,13 +15,12 @@ public class RecorderTeleop extends LinearOpMode {
         waitForStart();
 
         while(opModeIsActive()) {
-            robot.handleGamepad(gamepad1, gamepad2);
-            recorder.update(gamepad1, gamepad2);
+            if (recorder.update(gamepad1, gamepad2)){
+                robot.handleGamepad(gamepad1, gamepad2);
+            }
             if (gamepad1.y) {
                 telemetry.addLine(recorder.delays);
                 telemetry.update();
-                while (opModeIsActive()) {}
-                break;
             }
         }
 

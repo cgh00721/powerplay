@@ -34,7 +34,7 @@ public class GamepadRecorder {
         time = System.currentTimeMillis();
     }
 
-    public void update(Gamepad gamepad1, Gamepad gamepad2) {
+    public boolean update(Gamepad gamepad1, Gamepad gamepad2) {
         if (
                 !isEqual(gamepad1, gamepad1Cache) ||
                         !isEqual(gamepad2, gamepad2Cache)
@@ -49,11 +49,13 @@ public class GamepadRecorder {
                 GlobalTelemetry.telemetry.update();
                 e.printStackTrace();
             }
+            return true;
         }
+        return false;
     }
 
     public void write(Gamepad gamepad1, Gamepad gamepad2) {
-        String line = (System.currentTimeMillis() - time) + " " +
+        /*String line = (System.currentTimeMillis() - time) + " " +
                 gamepad1.left_stick_x + "f " +
                 gamepad1.left_stick_y + "f " +
                 gamepad1.left_bumper + " " +
@@ -82,7 +84,7 @@ public class GamepadRecorder {
                 gamepad2.dpad_down + " " +
                 gamepad2.dpad_up + " " +
                 gamepad2.dpad_left + " " +
-                gamepad2.dpad_right;
+                gamepad2.dpad_right;*/
 
         try {
             long new_time = System.currentTimeMillis();
@@ -104,7 +106,7 @@ public class GamepadRecorder {
             FileOutputStream outputStream = new FileOutputStream(android.os.Environment.getExternalStorageDirectory().getPath() + "/FIRST/" + filename);
             ObjectOutputStream file = new ObjectOutputStream(outputStream);
             file.writeObject(path);
-            file.flush();
+            //file.flush();
             file.close();
             //System.out.print(1/0);
             GlobalTelemetry.telemetry.addLine(delays);

@@ -125,7 +125,7 @@ public class GamepadRobot {
 
     }
 
-    public void handleGamepad(Gamepad gamepad1) {
+    /*public void handleGamepad(Gamepad gamepad1) {
         handleGamepad(
                 gamepad1.left_stick_x,
                 gamepad1.left_stick_y,
@@ -205,10 +205,10 @@ public class GamepadRobot {
                 0f, 0f,
                 false, false, false, false
         );
-    }
+    }*/
 
     public void handleGamepad(
-            float left_stick_x1,
+            /*float left_stick_x1,
             float left_stick_y1,
             boolean left_bumper1,
             boolean right_bumper1,
@@ -236,41 +236,47 @@ public class GamepadRobot {
             boolean dpad_down2,
             boolean dpad_up2,
             boolean dpad_left2,
-            boolean dpad_right2
+            boolean dpad_right2*/
+            Gamepad gamepad1, Gamepad gamepad2
     ) {
         //telemetry.addData("Working", Lift.getCurrentPosition() +", " + encoderlocation +", " + bottom.blue());
         //telemetry.update();
 //***************************************************************************
-        if(right_bumper1) {
+        if(gamepad1.right_bumper) {
             LeftFrontDrive.setPower(0.5);
             LeftBackDrive.setPower(0.5);
             RightFrontDrive.setPower(-0.5);
             RightBackDrive.setPower(-0.5);
         }
-        else if(left_bumper1) {
+        else if(gamepad1.left_bumper) {
             LeftFrontDrive.setPower(-0.5);
             LeftBackDrive.setPower(-0.5);
             RightFrontDrive.setPower(0.5);
             RightBackDrive.setPower(0.5);
+        }  else if (!gamepad1.left_bumper && !gamepad1.right_bumper && gamepad1.left_stick_y == 0 && gamepad1.left_stick_x == 0){
+            LeftFrontDrive.setPower(0);
+            LeftBackDrive.setPower(0);
+            RightFrontDrive.setPower(0);
+            RightBackDrive.setPower(0);
         }
         else if(!turbo){// && (old_x != left_stick_x1 || old_y != left_stick_y1)){
-            old_x = left_stick_x1;
-            old_y = left_stick_y1;
-            LeftFrontDrive.setPower((Math.pow(left_stick_y1, 5) - Math.pow(left_stick_x1, 5)) * 0.15);
-            LeftBackDrive.setPower((Math.pow(left_stick_y1, 5) + Math.pow(left_stick_x1, 5)) * 0.15);
-            RightFrontDrive.setPower((Math.pow(left_stick_y1, 5) + Math.pow(left_stick_x1, 5)) * 0.15);
-            RightBackDrive.setPower((Math.pow(left_stick_y1, 5) - Math.pow(left_stick_x1, 5)) * 0.15);
+            old_x = gamepad1.left_stick_x;
+            old_y = gamepad1.left_stick_y;
+            LeftFrontDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) - Math.pow(gamepad1.left_stick_x, 5)) * 0.15);
+            LeftBackDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) + Math.pow(gamepad1.left_stick_x, 5)) * 0.15);
+            RightFrontDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) + Math.pow(gamepad1.left_stick_x, 5)) * 0.15);
+            RightBackDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) - Math.pow(gamepad1.left_stick_x, 5)) * 0.15);
         }
         else if (turbo){ //&& (old_x != left_stick_x1 || old_y != left_stick_y1)){
             //Set Power using cubic control
-            old_x = left_stick_x1;
-            old_y = left_stick_y1;
-            LeftFrontDrive.setPower((Math.pow(left_stick_y1, 5) - Math.pow(left_stick_x1, 5)) * 0.75);
-            LeftBackDrive.setPower((Math.pow(left_stick_y1, 5) + Math.pow(left_stick_x1, 5)) * 0.75);
-            RightFrontDrive.setPower((Math.pow(left_stick_y1, 5) + Math.pow(left_stick_x1, 5)) * 0.75);
-            RightBackDrive.setPower((Math.pow(left_stick_y1, 5) - Math.pow(left_stick_x1, 5)) * 0.75);
+            old_x = gamepad1.left_stick_x;
+            old_y = gamepad1.left_stick_y;
+            LeftFrontDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) - Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
+            LeftBackDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) + Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
+            RightFrontDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) + Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
+            RightBackDrive.setPower((Math.pow(gamepad1.left_stick_y, 5) - Math.pow(gamepad1.left_stick_x, 5)) * 0.75);
         }
-        if(a1){
+        if(gamepad1.a){
             if(!turbo){
                 turbo = true;
             }
@@ -308,11 +314,11 @@ public class GamepadRobot {
         if(bottom.blue()>1500){
             encoderlocation = 0;
         }*/
-        if(a2){
+        if(gamepad2.a){
             claw.setPosition(0.50);
 
         }
-        if(b2){
+        if(gamepad2.b){
             claw.setPosition(0.0);
         }
 
