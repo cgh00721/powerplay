@@ -35,6 +35,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Config
+
 @Autonomous(group="drive")
 public class OdometryTest extends LinearOpMode {
 
