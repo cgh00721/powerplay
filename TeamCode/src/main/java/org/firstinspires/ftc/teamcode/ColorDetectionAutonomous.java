@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
         import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+        import com.qualcomm.robotcore.eventloop.opmode.Disabled;
         import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
         import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -9,7 +10,7 @@ package org.firstinspires.ftc.teamcode;
         import org.openftc.easyopencv.OpenCvInternalCamera;
         import org.openftc.easyopencv.OpenCvCameraRotation;
 
-
+@Disabled
 @Autonomous(name="ColorDetectionAutonomous", group="Pushbot")
 public class ColorDetectionAutonomous extends LinearOpMode {
     ConeDetectionPipeline detectionPipeline;
