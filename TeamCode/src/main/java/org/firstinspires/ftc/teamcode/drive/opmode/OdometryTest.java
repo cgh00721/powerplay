@@ -73,7 +73,29 @@ public class OdometryTest extends LinearOpMode {
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
         //these strafes might need to change to actual strafes
+
+        Trajectory ToPole1 = drive.trajectoryBuilder(startPose)
+                .splineToConstantHeading(new Vector2d(12,-60), Math.toRadians(90.00),
+                        SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .splineToConstantHeading(new Vector2d(12,-36),Math.toRadians(90.00),
+                        SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .splineTo(new Vector2d(12, -34), Math.toRadians(90.00),
+                        SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .splineToConstantHeading(new Vector2d(0,-30),Math.toRadians(90.00),
+                        SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .build();
+
         Trajectory ToPole = drive.trajectoryBuilder(ToCone.end())
+                .splineToConstantHeading(new Vector2d(36,-30), Math.toRadians(90.00),
+                        SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .splineToConstantHeading(new Vector2d(36,-45), Math.toRadians(90.00),
+                        SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .splineTo(new Vector2d(36, -36), Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
@@ -83,30 +105,30 @@ public class OdometryTest extends LinearOpMode {
                 .splineTo(new Vector2d(12, -34), Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .splineToConstantHeading(new Vector2d(-3,-40),Math.toRadians(90.00),
+                .splineToConstantHeading(new Vector2d(-3,-30),Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
         //might need to change y in second command to -12, just depends on how the spline turns
-        Trajectory ToPickup = drive.trajectoryBuilder(ToPole.end())
-                .splineTo(new Vector2d(12,-37),Math.toRadians(90.00),
+        Trajectory ToPickup = drive.trajectoryBuilder(ToPole1.end())
+                .splineToConstantHeading(new Vector2d(12,-37),Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .splineTo(new Vector2d(12, -24), Math.toRadians(90.00),
+                .splineToConstantHeading(new Vector2d(12, -24), Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .splineTo(new Vector2d(60, -12), Math.toRadians(00.00),
+                .splineTo(new Vector2d(59, -11), Math.toRadians(00.00),
                         SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
         Trajectory BackToPole =  drive.trajectoryBuilder(ToPickup.end())
-                .splineToConstantHeading(new Vector2d(12, -12), Math.toRadians(00.00),
+                .splineToConstantHeading(new Vector2d(15, -11), Math.toRadians(00.00),
                         SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .splineToConstantHeading(new Vector2d(12,-36),Math.toRadians(0.00),
                         SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .splineTo(new Vector2d(0, -34), Math.toRadians(90.00),
+                .splineTo(new Vector2d(0, -30), Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
@@ -131,7 +153,7 @@ public class OdometryTest extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        drive.followTrajectory(ToCone);
+        //drive.followTrajectory(ToCone);
          if (detectionPipeline.getLatestResult() == 1) {
             col = 1;
         } else if (detectionPipeline.getLatestResult() == 2) {
@@ -140,10 +162,12 @@ public class OdometryTest extends LinearOpMode {
             col = 3;
         }
         sleep(1000);
-        drive.followTrajectory(ToPole);
+        drive.followTrajectory(ToPole1);
         sleep(1000);
-        //drive.followTrajectory(ToPickup);
+        drive.followTrajectory(ToPickup);
         sleep(1000);
+        drive.followTrajectory(BackToPole);
+
         /**
         drive.followTrajectory(BackToPole);
         sleep(1000);
