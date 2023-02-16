@@ -8,41 +8,27 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.BarcodeDetectionPipeline;
 import org.firstinspires.ftc.teamcode.GlobalTelemetry;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 import org.firstinspires.ftc.teamcode.*;//package are annoying
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import java.lang.Math;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.ConeDetectionPipeline;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvWebcam;
-import org.openftc.easyopencv.OpenCvInternalCamera;
-import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Config
 
 @Autonomous(group="drive")
-public class OdometryTest extends LinearOpMode {
+public class BlueCorner extends LinearOpMode {
     // I did not calibrate it. Measurements will be wrong probably. Numbers are default for apriltag library
 
     // Lens intrinsics
@@ -196,7 +182,6 @@ public class OdometryTest extends LinearOpMode {
         drive.turn(Math.toRadians(90));
         sleep(500);
 
-        /**
         if(col == 1){
             drive.followTrajectory(to1);
         }
@@ -206,7 +191,7 @@ public class OdometryTest extends LinearOpMode {
         else{
             drive.followTrajectory(to3);
         }
-        **/
+
         Pose2d poseEstimate = drive.getPoseEstimate();
         telemetry.addData("finalX", poseEstimate.getX());
         telemetry.addData("finalY", poseEstimate.getY());
