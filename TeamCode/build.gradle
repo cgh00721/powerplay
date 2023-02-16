@@ -26,10 +26,10 @@ dependencies {
     implementation 'org.openftc:apriltag:1.1.1'
     implementation 'org.apache.commons:commons-math3:3.6.1'
     implementation 'com.acmerobotics.roadrunner:core:0.5.5'
-    //implementation 'com.google.zxing:core:3.2.0'
-    //implementation 'com.google.zxing:android-core:3.2.0'
+    implementation 'com.google.zxing:core:3.2.0'
+    implementation 'com.google.zxing:android-core:3.2.0'
     // https://mvnrepository.com/artifact/com.google.zxing/javase
-    //implementation group: 'com.google.zxing', name: 'javase', version: '3.3.0'
+    implementation group: 'com.google.zxing', name: 'javase', version: '3.3.0'
 
 }
 
