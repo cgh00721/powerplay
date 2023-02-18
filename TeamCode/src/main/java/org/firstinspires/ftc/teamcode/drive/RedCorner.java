@@ -117,6 +117,7 @@ public class RedCorner extends LinearOpMode {
          SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
          .build();
          */
+        //might need to change the conztant heading one, dependz
         Trajectory ToPole1 = drive.trajectoryBuilder(startPose)
                 .splineToConstantHeading(new Vector2d(-12,-60), Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
@@ -131,7 +132,7 @@ public class RedCorner extends LinearOpMode {
                         SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
-        //might need to change y in second command to -12, just depends on how the spline turns
+        //might need to change  the -14 the previouz and nezt
         Trajectory ToPickup = drive.trajectoryBuilder(ToPole1.end())
                 .splineToConstantHeading(new Vector2d(-14,-40),Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),

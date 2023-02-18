@@ -43,7 +43,7 @@ public class BlueCorner extends LinearOpMode {
     // UNITS ARE METERS
     double tagsize = 0.166;
 
-    AprilTagDetectionPipeline detectionPipeline;
+    GimmickPipeline detectionPipeline;
     int inch = 45;
     int col = 0;
     private  DcMotor lift = null;
@@ -58,7 +58,7 @@ public class BlueCorner extends LinearOpMode {
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         claw = hardwareMap.servo.get("claw");
 
-        detectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
+        detectionPipeline = new GimmickPipeline();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         WebcamName webcamName = hardwareMap.get(WebcamName.class,"isaac");
         OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
@@ -104,6 +104,11 @@ public class BlueCorner extends LinearOpMode {
                 .build();
          */
         Trajectory ToPole1 = drive.trajectoryBuilder(startPose)
+                .addTemporalMarker(0.1,()->{
+                    lift.setTargetPosition(-3500);
+                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    lift.setPower(1);
+                })
                 .splineToConstantHeading(new Vector2d(12,-60), Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
@@ -113,25 +118,34 @@ public class BlueCorner extends LinearOpMode {
                 .splineTo(new Vector2d(12, -34), Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .splineToConstantHeading(new Vector2d(0,-30),Math.toRadians(90.00),
+                .splineToConstantHeading(new Vector2d(0,-26),Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .addDisplacementMarker(() -> {
+                    claw.setPosition(open);
+                })
                 .build();
         //might need to change y in second command to -12, just depends on how the spline turns
         Trajectory ToPickup = drive.trajectoryBuilder(ToPole1.end())
-                .splineToConstantHeading(new Vector2d(14,-40),Math.toRadians(90.00),
+                .splineToConstantHeading(new Vector2d(18,-38),Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .splineToConstantHeading(new Vector2d(14, -24), Math.toRadians(90.00),
+                .addDisplacementMarker(()->{
+                    lift.setTargetPosition(0);
+                    lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    lift.setPower(-1);
+                })
+                .splineToConstantHeading(new Vector2d(15, -20), Math.toRadians(90.00),
                         SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .splineTo(new Vector2d(60, -12), Math.toRadians(00.00),
+                .splineTo(new Vector2d(56, -12), Math.toRadians(00.00),
                         SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+
                 .build();
 
         Trajectory BackToPole =  drive.trajectoryBuilder(ToPickup.end())
-                .splineToConstantHeading(new Vector2d(17, -5), Math.toRadians(00.00),
+                .splineToConstantHeading(new Vector2d(17, -10), Math.toRadians(00.00),
                         SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .splineToConstantHeading(new Vector2d(20,-40),Math.toRadians(00.00),
@@ -152,11 +166,15 @@ public class BlueCorner extends LinearOpMode {
         Trajectory to3 = drive.trajectoryBuilder((BackToPole.end()).plus(new Pose2d(0, 0, Math.toRadians(90))), false)
                 .strafeRight(58)
                 .build();
-
+        Trajectory movetiny = drive.trajectoryBuilder(ToPole1.end())
+                .splineToConstantHeading(new Vector2d(0,-30),Math.toRadians(90.00),
+                        SampleMecanumDrive.getVelocityConstraint(55, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))                                .build();
         waitForStart();
 
         if (isStopRequested()) return;
-
+        claw.setPosition(closed);
+        sleep(1000);
         for(int i = 0; i<5; i++) {
             if (detectionPipeline.latestResult == 1) {
                 col = 1;
@@ -170,17 +188,19 @@ public class BlueCorner extends LinearOpMode {
             }
             sleep(200);
         }
-        telemetry.addData("num",col);
+        telemetry.addData("num",col +", "+ claw.getPosition());
         telemetry.update();
 
         sleep(500);
         drive.followTrajectory(ToPole1);
         sleep(500);
-        drive.followTrajectory(ToPickup);
+        //drive.followTrajectory(ToPickup);
+        //sleep(500);
+        //drive.followTrajectory(BackToPole);
+        //drive.turn(Math.toRadians(90));
         sleep(500);
-        drive.followTrajectory(BackToPole);
-        drive.turn(Math.toRadians(90));
-        sleep(500);
+        drive.followTrajectory(movetiny);
+        sleep(100);
 
         if(col == 1){
             drive.followTrajectory(to1);
@@ -204,7 +224,7 @@ public class BlueCorner extends LinearOpMode {
 
 
     }
-    double open = 0.55;
+    double open = 0.43;
     double closed = 0.0;
     private void grab(){
         claw.setPosition(open);

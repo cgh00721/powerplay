@@ -132,11 +132,11 @@ public class AprilTagDetectionPipeline extends OpenCvPipeline
             drawAxisMarker(input, tagsizeY/2.0, 6, pose.rvec, pose.tvec, cameraMatrix);
             draw3dCubeMarker(input, tagsizeX, tagsizeX, tagsizeY, 5, pose.rvec, pose.tvec, cameraMatrix);
 
-            if (detection.id == 15) {
+            if (detection.id == 15 || detection.id == 16) {
                 latestResult = 1;
-            } else if (detection.id == 16) {
+            } else if (detection.id == 17 || detection.id == 18) {
                 latestResult = 2;
-            } else if (detection.id == 17) {
+            } else if (detection.id == 19 || detection.id == 20) {
                 latestResult = 3;
             }
         }

@@ -18,8 +18,8 @@ public class RobotCode extends LinearOpMode {
     private DcMotor RightBackDrive = null;
     private DcMotor Lift = null;
     private Servo claw = null;
-    private ColorSensor top;
-    private ColorSensor bottom;
+    //private ColorSensor top;
+    //private ColorSensor bottom;
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -33,8 +33,8 @@ public class RobotCode extends LinearOpMode {
         RightBackDrive = hardwareMap.dcMotor.get("RBD");
         Lift = hardwareMap.dcMotor.get("Lift");
         claw = hardwareMap.servo.get("claw");
-        bottom = hardwareMap.get(ColorSensor.class, "bottom");
-        top = hardwareMap.get(ColorSensor.class, "top");
+        //bottom = hardwareMap.get(ColorSensor.class, "bottom");
+        //top = hardwareMap.get(ColorSensor.class, "top");
         RightBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LeftFrontDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LeftBackDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -59,7 +59,7 @@ public class RobotCode extends LinearOpMode {
         boolean turbo = true;
         while(opModeIsActive())
         {
-            telemetry.addData("Working", Lift.getCurrentPosition() +", " + encoderlocation +", " + bottom.blue());
+            telemetry.addData("Working", Lift.getCurrentPosition() +", " + encoderlocation);
             telemetry.update();
 //***************************************************************************
             if(gamepad1.right_bumper) {
@@ -95,9 +95,9 @@ public class RobotCode extends LinearOpMode {
                     turbo = false;
                 }
             }
-            if(top.blue()<1500 &&( gamepad2.left_stick_y>0.05)){
+            //top.blue()<1500 &&
+            if((gamepad2.left_stick_y>0.05)){
                 Lift.setPower(gamepad2.left_stick_y);
-                //Lift.setPower(-0.5);
                 encoderlocation = Lift.getCurrentPosition();
             }
             //&& bottom.blue()<1500
@@ -117,7 +117,7 @@ public class RobotCode extends LinearOpMode {
                 }**/
                 Lift.setPower(0.0);
             }
-
+            /**
             if(top.blue()>1500){
                 //may need to change num
                 encoderlocation = 2000;
@@ -125,8 +125,9 @@ public class RobotCode extends LinearOpMode {
             if(bottom.blue()>1500){
                 encoderlocation = 0;
             }
+             */
             if(gamepad2.a){
-                claw.setPosition(0.50);
+                claw.setPosition(0.42);
 
             }
             if(gamepad2.b){
