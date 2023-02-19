@@ -13,7 +13,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 
 @Autonomous(name="RedSideFullPlay", group="Pushbot")
 public class RedSideFullPlay extends LinearOpMode {
-    ConeDetectionPipeline detectionPipeline;
+    GimmickPipeline detectionPipeline;
     private DcMotor RightFrontDrive = null;
     private DcMotor LeftFrontDrive = null;
     private DcMotor LeftBackDrive = null;
@@ -59,7 +59,7 @@ public class RedSideFullPlay extends LinearOpMode {
         telemetry.addData("Status", "waiting for start");
         telemetry.update();
 
-        detectionPipeline = new ConeDetectionPipeline();
+        detectionPipeline = new GimmickPipeline();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         WebcamName webcamName = hardwareMap.get(WebcamName.class,"isaac");
@@ -86,11 +86,11 @@ public class RedSideFullPlay extends LinearOpMode {
         sleep(500);
         robot.StrafeRight(0.3,2*(inch));
         sleep(300);
-        if (detectionPipeline.getLatestResult() == 1) {
+        if (detectionPipeline.latestResult == 1) {
             col = 1;
-        } else if (detectionPipeline.getLatestResult() == 2) {
+        } else if (detectionPipeline.latestResult == 2) {
             col = 2;
-        } else if (detectionPipeline.getLatestResult() == 3) {
+        } else if (detectionPipeline.latestResult == 3) {
             col = 3;
         }
         telemetry.addData("Status", col);

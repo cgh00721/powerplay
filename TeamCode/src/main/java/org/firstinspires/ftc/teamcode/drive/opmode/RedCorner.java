@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.drive;
+package org.firstinspires.ftc.teamcode.drive.opmode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -57,7 +57,7 @@ public class RedCorner extends LinearOpMode {
     // UNITS ARE METERS
     double tagsize = 0.166;
 
-    AprilTagDetectionPipeline detectionPipeline;
+    GimmickPipeline detectionPipeline;
     int inch = 45;
     int col = 0;
     private  DcMotor lift = null;
@@ -72,7 +72,7 @@ public class RedCorner extends LinearOpMode {
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         claw = hardwareMap.servo.get("claw");
 
-        detectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
+        detectionPipeline = new GimmickPipeline();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         WebcamName webcamName = hardwareMap.get(WebcamName.class,"isaac");
         OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);

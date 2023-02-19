@@ -11,7 +11,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 
 @Autonomous(name="BlueSide", group="Pushbot")
 public class BlueSide extends LinearOpMode {
-    ConeDetectionPipeline detectionPipeline;
+    GimmickPipeline detectionPipeline;
     private DcMotor RightFrontDrive = null;
     private DcMotor LeftFrontDrive = null;
     private DcMotor LeftBackDrive = null;
@@ -49,7 +49,7 @@ public class BlueSide extends LinearOpMode {
         telemetry.addData("Status", "waiting for start");
         telemetry.update();
 
-        detectionPipeline = new ConeDetectionPipeline();
+        detectionPipeline = new GimmickPipeline();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         WebcamName webcamName = hardwareMap.get(WebcamName.class,"isaac");
@@ -73,8 +73,8 @@ public class BlueSide extends LinearOpMode {
         robot.StrafeRight(0.5,150);
         sleep(100);
 
-        if (detectionPipeline.getLatestResult() == 1) {
-            telemetry.addData("Result", detectionPipeline.getLatestResult());
+        if (detectionPipeline.latestResult == 1) {
+            telemetry.addData("Result", detectionPipeline.latestResult);
             telemetry.update();
             robot.Reverse(0.5,17*(inch));
             robot.StrafeLeft(0.5, 23*inch);
@@ -82,14 +82,14 @@ public class BlueSide extends LinearOpMode {
             robot.Forward(0.5,600);
             robot.Forward(0.5,17*(inch));
             sleep(5000);
-        } else if (detectionPipeline.getLatestResult() == 2) {
-            telemetry.addData("Result", detectionPipeline.getLatestResult());
+        } else if (detectionPipeline.latestResult == 2) {
+            telemetry.addData("Result", detectionPipeline.latestResult);
             telemetry.update();
             robot.StrafeLeft(0.5,300);
             robot.Forward(0.5,600);
             sleep(5000);
-        } else if (detectionPipeline.getLatestResult() == 3) {
-            telemetry.addData("Result", detectionPipeline.getLatestResult());
+        } else if (detectionPipeline.latestResult == 3) {
+            telemetry.addData("Result", detectionPipeline.latestResult);
             telemetry.update();
             robot.StrafeRight(0.5, (23 * inch));
             robot.Forward(0.5,500);
